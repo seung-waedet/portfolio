@@ -75,6 +75,7 @@ const Projects = () => (
          <p></p>
          <b><a href="https://event-chat-backend.onrender.com/api-docs/" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">API Docs</a></b>
       </div>
+
       <div>
         <h2 className="text-2xl font-semibold mb-2">Text2Image</h2>
         <p>Text2Image is a user-friendly text-to-image generator that uses Stability AI's API to create images from text prompts. This Python script allows users to generate images in various formats (JPEG, PNG, WEBP) and save them with custom names.</p>
@@ -82,12 +83,37 @@ const Projects = () => (
         <p>Python libraries I used: requests, PIL (Pillow), pwinput</p>
         <br></br>
        <b><a href="https://github.com/seung-waedet/text2image-python" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">GitHub</a></b>
+       </div>
 
+       <div>
+        <h2 className="text-2xl font-semibold mb-2">Blog API</h2>
+        <p>
+          This is an API for a blogging platform
+          </p>
+          <br></br>
+          <p> Technologies used include Node.js, Express etc.
+          </p>
+
+          <br></br>
+        <b> <a href="https://github.com/seung-waedet/blog-api" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">GitHub</a></b>
+         <p></p>
       </div>
-      {/* <div>
-        <h2 className="text-2xl font-semibold mb-2">Project 3</h2>
-        <p>Brief description of Project 3 and your role in it.</p>
-      </div> */}
+
+      <div>
+        <h2 className="text-2xl font-semibold mb-2">Scissor</h2>
+        <p>
+        Fullstack application providing URLs shortening service.
+          </p>
+          <br></br>
+          <p>
+            Technologies used include EJS, Node.js with TypeScript
+            </p>
+
+          <br></br>
+        <b> <a href="https://github.com/seung-waedet/scissor-url-shortener" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">GitHub</a></b>
+         <p></p>
+      </div>
+      
     </div>
     
   </PageLayout>
