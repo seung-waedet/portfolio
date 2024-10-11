@@ -35,9 +35,6 @@ const Home = () => (
       </p>
 
       <p>
-      I am a passionate back-end developer with a strong foundation in building APIs using Node.js.
-      </p>
-      <p>
         I am skilled in the following technologies: <strong>HTML, CSS, React, Linux, Python, and JavaScript/TypeScript. </strong>
         </p>
        <p>
