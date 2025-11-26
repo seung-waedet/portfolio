@@ -1,0 +1,48 @@
+{
+  "name": "backend-portfolio-2025",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_OPTIONS='--no-deprecation' next dev --turbo",
+    "build": "cross-env NODE_OPTIONS='--no-deprecation' next build",
+    "start": "cross-env NODE_OPTIONS='--no-deprecation' next start",
+    "lint": "next lint",
+    "payload": "cross-env NODE_OPTIONS='--no-deprecation' payload",
+    "generate:types": "cross-env NODE_OPTIONS='--no-deprecation' payload generate:types",
+    "seed": "cross-env NODE_OPTIONS='--no-deprecation' tsx ./src/payload/seed.ts"
+  },
+  "dependencies": {
+    "@payloadcms/db-mongodb": "^3.0.0",
+    "@payloadcms/next": "^3.0.0",
+    "@payloadcms/richtext-lexical": "^3.0.0",
+    "@payloadcms/ui": "^3.0.0",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "graphql": "^16.8.1",
+    "mongodb": "^6.3.0",
+    "next": "15.2.3",
+    "payload": "^3.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
+    "react-syntax-highlighter": "^16.1.0",
+    "remark-gfm": "^4.0.1",
+    "sharp": "^0.33.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "@types/node": "^20.11.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.17",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "15.2.3",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
