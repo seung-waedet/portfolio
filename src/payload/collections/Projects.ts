@@ -1,124 +1,123 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig } from "payload";
 
 export const Projects: CollectionConfig = {
-  slug: 'projects',
+  slug: "projects",
   admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'status', 'updatedAt'],
+    useAsTitle: "title",
+    defaultColumns: ["title", "status", "updatedAt"],
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
+      name: "title",
+      type: "text",
       required: true,
     },
     {
-      name: 'slug',
-      type: 'text',
+      name: "slug",
+      type: "text",
       required: true,
       unique: true,
       admin: {
-        description: 'URL-friendly version of the title',
+        description: "URL-friendly version of the title",
       },
     },
     {
-      name: 'tagline',
-      type: 'text',
+      name: "tagline",
+      type: "text",
       required: true,
     },
     {
-      name: 'description',
-      type: 'richText',
+      name: "description",
+      type: "richText",
       required: true,
     },
     {
-      name: 'status',
-      type: 'select',
+      name: "status",
+      type: "select",
       required: true,
       options: [
-        { label: 'Live', value: 'live' },
-        { label: 'In Development', value: 'dev' },
-        { label: 'Archived', value: 'archived' },
+        { label: "Live", value: "live" },
+        { label: "In Development", value: "dev" },
+        { label: "Archived", value: "archived" },
       ],
-      defaultValue: 'live',
+      defaultValue: "live",
     },
     {
-      name: 'tech',
-      type: 'array',
-      required: true,
+      name: "tech",
+      type: "array",
       fields: [
         {
-          name: 'name',
-          type: 'text',
+          name: "name",
+          type: "text",
           required: true,
         },
       ],
     },
     {
-      name: 'apiEndpoint',
-      type: 'text',
+      name: "apiEndpoint",
+      type: "text",
       admin: {
-        description: 'Live API URL',
+        description: "Live API URL",
       },
     },
     {
-      name: 'swaggerUrl',
-      type: 'text',
+      name: "swaggerUrl",
+      type: "text",
       admin: {
-        description: 'OpenAPI/Swagger documentation URL',
+        description: "OpenAPI/Swagger documentation URL",
       },
     },
     {
-      name: 'githubUrl',
-      type: 'text',
+      name: "githubUrl",
+      type: "text",
     },
     {
-      name: 'liveUrl',
-      type: 'text',
+      name: "liveUrl",
+      type: "text",
     },
     {
-      name: 'architecture',
-      type: 'textarea',
+      name: "architecture",
+      type: "textarea",
       admin: {
-        description: 'Mermaid diagram code or architecture description',
+        description: "Mermaid diagram code or architecture description",
       },
     },
     {
-      name: 'challenges',
-      type: 'richText',
+      name: "challenges",
+      type: "richText",
     },
     {
-      name: 'benchmarks',
-      type: 'array',
+      name: "benchmarks",
+      type: "array",
       fields: [
         {
-          name: 'metric',
-          type: 'text',
+          name: "metric",
+          type: "text",
           required: true,
         },
         {
-          name: 'value',
-          type: 'text',
+          name: "value",
+          type: "text",
           required: true,
         },
       ],
     },
     {
-      name: 'curlExample',
-      type: 'code',
+      name: "curlExample",
+      type: "code",
       admin: {
-        language: 'bash',
+        language: "bash",
       },
     },
     {
-      name: 'featured',
-      type: 'checkbox',
+      name: "featured",
+      type: "checkbox",
       defaultValue: false,
     },
     {
-      name: 'order',
-      type: 'number',
+      name: "order",
+      type: "number",
       defaultValue: 0,
     },
   ],
-}
+};
