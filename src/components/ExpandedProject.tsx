@@ -1,18 +1,12 @@
-import { convertLexicalToHTML } from '@payloadcms/richtext-lexical/html'
+"use client";
 
 interface ExpandedProjectProps {
-  project: any
+  project: any;
 }
 
-export default async function ExpandedProject({ project }: ExpandedProjectProps) {
-  // Convert lexical rich text fields to HTML
-  const descriptionHTML = project.description
-    ? await convertLexicalToHTML({ data: project.description })
-    : '';
-
-  const challengesHTML = project.challenges
-    ? await convertLexicalToHTML({ data: project.challenges })
-    : '';
+export default function ExpandedProject({ project }: ExpandedProjectProps) {
+  // For client-side, we'll render the raw data as JSON strings for now
+  // In a proper implementation, the conversion would happen on the server
 
   return (
     <div className="terminal mb-12 group box-glow">
@@ -32,7 +26,7 @@ export default async function ExpandedProject({ project }: ExpandedProjectProps)
             </h2>
             <p className="text-xl text-magenta mt-2">{project.tagline}</p>
           </div>
-          {project.status === 'live' && (
+          {project.status === "live" && (
             <span className="text-sm font-mono text-lime border-2 border-lime px-3 py-1 animate-pulse whitespace-nowrap">
               [LIVE]
             </span>
@@ -42,7 +36,9 @@ export default async function ExpandedProject({ project }: ExpandedProjectProps)
         {/* Tech stack */}
         {project.tech && project.tech.length > 0 && (
           <div className="mb-6">
-            <h3 className="text-xl font-display font-bold text-lime mb-3">STACK</h3>
+            <h3 className="text-xl font-display font-bold text-lime mb-3">
+              STACK
+            </h3>
             <div className="flex flex-wrap gap-3">
               {project.tech.map((t: any, i: number) => (
                 <span
@@ -58,17 +54,21 @@ export default async function ExpandedProject({ project }: ExpandedProjectProps)
 
         {/* Description */}
         <div className="prose prose-invert max-w-none">
-          <h3 className="text-xl font-display font-bold text-lime">DESCRIPTION</h3>
+          <h3 className="text-xl font-display font-bold text-lime">
+            DESCRIPTION
+          </h3>
           <div
             className="text-lime-dim leading-relaxed mt-3"
-            dangerouslySetInnerHTML={{ __html: descriptionHTML }}
+            dangerouslySetInnerHTML={{ __html: project.descriptionHTML }}
           />
         </div>
 
         {/* API Playground */}
         {project.curlExample && (
           <div>
-            <h3 className="text-xl font-display font-bold text-magenta mb-3">API PLAYGROUND</h3>
+            <h3 className="text-xl font-display font-bold text-magenta mb-3">
+              API PLAYGROUND
+            </h3>
             <div className="terminal p-4">
               <div className="terminal-header">
                 <div className="terminal-dot" />
@@ -88,7 +88,9 @@ export default async function ExpandedProject({ project }: ExpandedProjectProps)
         {/* Architecture */}
         {project.architecture && (
           <div>
-            <h3 className="text-xl font-display font-bold text-lime mb-3">ARCHITECTURE</h3>
+            <h3 className="text-xl font-display font-bold text-lime mb-3">
+              ARCHITECTURE
+            </h3>
             <div className="terminal p-4">
               <pre className="text-sm text-lime-dim whitespace-pre-wrap">
                 {project.architecture}
@@ -100,14 +102,21 @@ export default async function ExpandedProject({ project }: ExpandedProjectProps)
         {/* Benchmarks */}
         {project.benchmarks && project.benchmarks.length > 0 && (
           <div>
-            <h3 className="text-xl font-display font-bold text-magenta mb-3">BENCHMARKS</h3>
+            <h3 className="text-xl font-display font-bold text-magenta mb-3">
+              BENCHMARKS
+            </h3>
             <div className="grid md:grid-cols-2 gap-4">
               {project.benchmarks.map((bench: any, i: number) => (
-                <div key={i} className="border-2 border-lime p-6 hover:bg-lime hover:text-void transition-all group">
+                <div
+                  key={i}
+                  className="border-2 border-lime p-6 hover:bg-lime hover:text-void transition-all group"
+                >
                   <p className="text-sm font-mono text-lime-dim group-hover:text-void/70 mb-2">
                     {bench.metric}
                   </p>
-                  <p className="text-3xl font-display font-bold">{bench.value}</p>
+                  <p className="text-3xl font-display font-bold">
+                    {bench.value}
+                  </p>
                 </div>
               ))}
             </div>
@@ -117,11 +126,13 @@ export default async function ExpandedProject({ project }: ExpandedProjectProps)
         {/* Challenges */}
         {project.challenges && (
           <div>
-            <h3 className="text-xl font-display font-bold text-lime mb-3">CHALLENGES & LEARNINGS</h3>
+            <h3 className="text-xl font-display font-bold text-lime mb-3">
+              CHALLENGES & LEARNINGS
+            </h3>
             <div className="prose prose-invert max-w-none">
               <div
                 className="text-lime-dim leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: challengesHTML }}
+                dangerouslySetInnerHTML={{ __html: project.challengesHTML }}
               />
             </div>
           </div>
@@ -162,5 +173,5 @@ export default async function ExpandedProject({ project }: ExpandedProjectProps)
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -3,6 +3,7 @@ import GlitchText from "@/components/GlitchText";
 import ExpandedProject from "@/components/ExpandedProject";
 import { getPayload } from "payload";
 import config from "@/payload/payload.config";
+import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +18,25 @@ export default async function Projects() {
       },
     },
   });
+
+  // Convert lexical rich text fields to HTML for each project
+  const projectsWithHTML = await Promise.all(
+    projects.docs.map(async (project) => {
+      const descriptionHTML = project.description
+        ? await convertLexicalToHTML({ data: project.description })
+        : "";
+
+      const challengesHTML = project.challenges
+        ? await convertLexicalToHTML({ data: project.challenges })
+        : "";
+
+      return {
+        ...project,
+        descriptionHTML,
+        challengesHTML,
+      };
+    }),
+  );
 
   return (
     <main className="min-h-screen p-8 md:p-16">
@@ -39,7 +59,7 @@ export default async function Projects() {
 
         {/* List of all projects with expanded details */}
         <div className="space-y-12">
-          {projects.docs.map((project: any, i: number) => (
+          {projectsWithHTML.map((project: any, i: number) => (
             <ExpandedProject key={project.id} project={project} />
           ))}
         </div>
