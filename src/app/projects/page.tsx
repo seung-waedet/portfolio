@@ -1,28 +1,31 @@
-import Link from 'next/link'
-import GlitchText from '@/components/GlitchText'
-import ProjectCard from '@/components/ProjectCard'
-import { getPayload } from 'payload'
-import config from '@/payload/payload.config'
+import Link from "next/link";
+import GlitchText from "@/components/GlitchText";
+import ExpandedProject from "@/components/ExpandedProject";
+import { getPayload } from "payload";
+import config from "@/payload/payload.config";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export default async function Projects() {
-  const payload = await getPayload({ config })
+  const payload = await getPayload({ config });
   const projects = await payload.find({
-    collection: 'projects',
-    sort: '-order',
+    collection: "projects",
+    sort: "-order",
     where: {
       status: {
-        not_equals: 'archived',
+        not_equals: "archived",
       },
     },
-  })
+  });
 
   return (
     <main className="min-h-screen p-8 md:p-16">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="mb-16">
-          <Link href="/" className="text-lime hover:text-magenta transition-colors font-mono text-sm mb-8 inline-block">
+          <Link
+            href="/"
+            className="text-lime hover:text-magenta transition-colors font-mono text-sm mb-8 inline-block"
+          >
             ← cd ..
           </Link>
           <h1 className="text-6xl md:text-8xl font-display font-bold mb-6">
@@ -34,13 +37,13 @@ export default async function Projects() {
           <div className="h-1 w-32 bg-magenta mt-6" />
         </div>
 
-        {/* Masonry-style grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-auto">
+        {/* List of all projects with expanded details */}
+        <div className="space-y-12">
           {projects.docs.map((project: any, i: number) => (
-            <ProjectCard key={project.id} project={project} index={i} />
+            <ExpandedProject key={project.id} project={project} />
           ))}
         </div>
       </div>
     </main>
-  )
+  );
 }

@@ -6,6 +6,9 @@ export const Projects: CollectionConfig = {
     useAsTitle: "title",
     defaultColumns: ["title", "status", "updatedAt"],
   },
+  access: {
+    read: () => true, // Allow public read access
+  },
   fields: [
     {
       name: "title",
