@@ -86,12 +86,12 @@ export default function Home() {
               <p className="text-lime-dim leading-relaxed font-mono">
                 Full Stack Developer with 3+ years of experience building
                 scalable internal tools and client-facing products. Specialized
-                in Python (FastAPI) backend development and modern JavaScript
-                frameworks (React/Next.js). Proven track record in strengthening
-                backend infrastructure, designing PostgreSQL databases, and
-                integrating AI/LLM APIs. Autonomous developer focused on
-                production-ready code, system reliability, and evolving internal
-                tools into scalable client solutions.
+                in Python backend development and modern JavaScript frameworks.
+                Proven track record in strengthening backend infrastructure,
+                designing PostgreSQL databases, and integrating AI/LLM APIs.
+                Autonomous developer focused on production-ready code, system
+                reliability, and evolving internal tools into scalable client
+                solutions.
               </p>
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function Home() {
                     <li>"Node.js (Express.js)",</li>
                     <li>"RESTful APIs",</li>
                     <li>"PostgreSQL",</li>
-                    <li>"Supabase"</li>
+                    <li>"MongoDB"</li>
                   </ul>
                   <p className="text-magenta mt-1">],</p>
                 </div>
@@ -140,9 +140,8 @@ export default function Home() {
                   </h3>
                   <ul className="ml-6 space-y-1 text-lime-dim">
                     <li>"PostgreSQL",</li>
-                    <li>"Supabase",</li>
                     <li>"Redis",</li>
-                    <li>"Database Design"</li>
+                    <li>"MongoDB"</li>
                   </ul>
                   <p className="text-magenta mt-1">],</p>
                 </div>
@@ -153,8 +152,6 @@ export default function Home() {
                   </h3>
                   <ul className="ml-6 space-y-1 text-lime-dim">
                     <li>"LLM APIs",</li>
-                    <li>"AI Automation Tools",</li>
-                    <li>"Data Providers",</li>
                     <li>"API Integrations"</li>
                   </ul>
                   <p className="text-magenta mt-1">],</p>
