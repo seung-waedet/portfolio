@@ -8,8 +8,7 @@ import TerminalButton from "@/components/TerminalButton";
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [typedText, setTypedText] = useState("");
-  const fullText =
-    "> Building distributed systems that don't fall apart at 3 AM_";
+  const fullText = "> Building scalable tools and AI-powered solutions_";
 
   useEffect(() => {
     setMounted(true);
@@ -52,7 +51,7 @@ export default function Home() {
           </h1>
 
           <p className="text-2xl md:text-3xl font-display font-semibold text-lime-dim">
-            Backend Engineer
+            Full Stack Developer
           </p>
 
           {/* Typewriter tagline */}
@@ -85,14 +84,14 @@ export default function Home() {
                 $ whoami
               </h2>
               <p className="text-lime-dim leading-relaxed font-mono">
-                Backend Engineer with 1+ years of experience building scalable
-                systems in Python, Node.js, and modern web technologies.
-                Currently developing AI platforms and distributed systems at
-                Kevin Winter Foundation and KSolutions. Proven track record in
-                architecting video processing systems that handle terabytes of
-                data, building matching algorithms, and implementing
-                authentication systems. Strong foundation in database design,
-                containerization, and test-driven development.
+                Full Stack Developer with 3+ years of experience building
+                scalable internal tools and client-facing products. Specialized
+                in Python (FastAPI) backend development and modern JavaScript
+                frameworks (React/Next.js). Proven track record in strengthening
+                backend infrastructure, designing PostgreSQL databases, and
+                integrating AI/LLM APIs. Autonomous developer focused on
+                production-ready code, system reliability, and evolving internal
+                tools into scalable client solutions.
               </p>
             </div>
           </div>
@@ -115,20 +114,20 @@ export default function Home() {
                 <div>
                   <h3 className="text-magenta font-bold mb-3">"backend": [</h3>
                   <ul className="ml-6 space-y-1 text-lime-dim">
-                    <li>"Node.js (Express.js, Nest.js)",</li>
-                    <li>"Flask",</li>
-                    <li>"FastAPI",</li>
-                    <li>"RESTful APIs"</li>
+                    <li>"Python (FastAPI)",</li>
+                    <li>"Node.js (Express.js)",</li>
+                    <li>"RESTful APIs",</li>
+                    <li>"PostgreSQL",</li>
+                    <li>"Supabase"</li>
                   </ul>
                   <p className="text-magenta mt-1">],</p>
                 </div>
 
                 <div>
-                  <h3 className="text-magenta font-bold mb-3">
-                    "languages": [
-                  </h3>
+                  <h3 className="text-magenta font-bold mb-3">"frontend": [</h3>
                   <ul className="ml-6 space-y-1 text-lime-dim">
-                    <li>"Python",</li>
+                    <li>"React",</li>
+                    <li>"Next.js",</li>
                     <li>"JavaScript",</li>
                     <li>"TypeScript"</li>
                   </ul>
@@ -141,33 +140,36 @@ export default function Home() {
                   </h3>
                   <ul className="ml-6 space-y-1 text-lime-dim">
                     <li>"PostgreSQL",</li>
-                    <li>"MongoDB",</li>
-                    <li>"MySQL",</li>
-                    <li>"Redis"</li>
+                    <li>"Supabase",</li>
+                    <li>"Redis",</li>
+                    <li>"Database Design"</li>
                   </ul>
                   <p className="text-magenta mt-1">],</p>
                 </div>
 
                 <div>
-                  <h3 className="text-magenta font-bold mb-3">"devops": [</h3>
+                  <h3 className="text-magenta font-bold mb-3">
+                    "ai_integrations": [
+                  </h3>
                   <ul className="ml-6 space-y-1 text-lime-dim">
-                    <li>"Docker",</li>
-                    <li>"Git",</li>
-                    <li>"Linux",</li>
-                    <li>"AWS",</li>
-                    <li>"CI/CD"</li>
+                    <li>"LLM APIs",</li>
+                    <li>"AI Automation Tools",</li>
+                    <li>"Data Providers",</li>
+                    <li>"API Integrations"</li>
                   </ul>
                   <p className="text-magenta mt-1">],</p>
                 </div>
 
                 <div>
-                  <h3 className="text-magenta font-bold mb-3">"testing": [</h3>
+                  <h3 className="text-magenta font-bold mb-3">
+                    "infrastructure": [
+                  </h3>
                   <ul className="ml-6 space-y-1 text-lime-dim">
-                    <li>"Jest",</li>
-                    <li>"Mocha",</li>
-                    <li>"pytest",</li>
-                    <li>"Unit Testing",</li>
-                    <li>"Integration Testing"</li>
+                    <li>"Cloud Deployment",</li>
+                    <li>"Monitoring & Logging",</li>
+                    <li>"Error Handling",</li>
+                    <li>"Rate Limiting",</li>
+                    <li>"Security Best Practices"</li>
                   </ul>
                   <p className="text-magenta mt-1">]</p>
                 </div>
