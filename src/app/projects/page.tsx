@@ -1,9 +1,9 @@
 import Link from "next/link";
-import GlitchText from "@/components/GlitchText";
 import ExpandedProject from "@/components/ExpandedProject";
 import { getPayload } from "payload";
 import config from "@/payload/payload.config";
 import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
+import { HARDCODED_PROJECTS } from "@/lib/projects";
 
 export const dynamic = "force-dynamic";
 
@@ -19,8 +19,8 @@ export default async function Projects() {
     },
   });
 
-  // Convert lexical rich text fields to HTML for each project
-  const projectsWithHTML = await Promise.all(
+  // Convert lexical rich text fields to HTML for dynamic projects
+  const cmsProjects = await Promise.all(
     projects.docs.map(async (project) => {
       const descriptionHTML = project.description
         ? await convertLexicalToHTML({ data: project.description })
@@ -38,31 +38,28 @@ export default async function Projects() {
     }),
   );
 
-  return (
-    <main className="min-h-screen p-8 md:p-16">
-      <div className="max-w-5xl mx-auto">
-        <div className="mb-16">
-          <Link
-            href="/"
-            className="text-lime hover:text-magenta transition-colors font-mono text-sm mb-8 inline-block"
-          >
-            ← cd ..
-          </Link>
-          <h1 className="text-6xl md:text-8xl font-display font-bold mb-6">
-            <GlitchText text="PROJECTS" />
-          </h1>
-          <p className="text-xl text-lime-dim font-mono">
-            $ ls -la ./systems-that-actually-work/
-          </p>
-          <div className="h-1 w-32 bg-magenta mt-6" />
-        </div>
+  // Merge hardcoded projects with CMS projects
+  const allProjects = [...HARDCODED_PROJECTS, ...cmsProjects].sort((a, b) => (b.order || 0) - (a.order || 0));
 
-        {/* List of all projects with expanded details */}
-        <div className="space-y-12">
-          {projectsWithHTML.map((project: any, i: number) => (
-            <ExpandedProject key={project.id} project={project} />
-          ))}
+  return (
+    <main className="min-h-screen pt-48 px-6 max-w-[900px] mx-auto space-y-32 reveal">
+      <header className="space-y-8 pb-12 border-b border-black/5">
+        <div className="flex items-center gap-4 text-[10px] uppercase tracking-[0.4em] font-bold">
+          <Link href="/" className="hover:opacity-40 transition-opacity">Root</Link>
+          <span className="opacity-20">/</span>
+          <span>Projects</span>
         </div>
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight uppercase">Selected Works.</h1>
+        <p className="text-lg font-medium opacity-60">
+          A collection of engineering artifacts, from SaaS engines to industrial dashboards.
+        </p>
+      </header>
+
+      {/* List of projects */}
+      <div className="space-y-64 pb-64">
+        {allProjects.map((project: any) => (
+          <ExpandedProject key={project.id} project={project} />
+        ))}
       </div>
     </main>
   );

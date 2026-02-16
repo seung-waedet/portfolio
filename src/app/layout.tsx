@@ -1,28 +1,17 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
-import CustomCursor from '@/components/CustomCursor'
-import MatrixRain from '@/components/MatrixRain'
 import CommandLineNav from '@/components/CommandLineNav'
 
-const spaceGrotesk = Space_Grotesk({
+const ibmPlexMono = IBM_Plex_Mono({
   subsets: ['latin'],
-  variable: '--font-clash',
-  display: 'swap',
   weight: ['300', '400', '500', '600', '700'],
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-berkeley',
-  display: 'swap',
-  weight: ['400', '700'],
+  variable: '--font-ibm-mono'
 })
 
 export const metadata: Metadata = {
-  title: 'Seung-wa Akpan | Backend Engineer',
-  description: 'Building distributed systems that don\'t fall apart at 3 AM',
-  keywords: ['backend', 'systems', 'api', 'distributed systems', 'engineering', 'Seung-wa Akpan'],
+  title: 'Seung-wa Akpan | Software Engineer',
+  description: 'Software Engineer specializing in scale, reliability, and architectural distinction.',
 }
 
 export default function RootLayout({
@@ -31,12 +20,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
-      <body className="font-mono" suppressHydrationWarning>
+    <html lang="en" className="selection:bg-black selection:text-cream" suppressHydrationWarning>
+      <body className={`${ibmPlexMono.variable} font-mono bg-cream text-black antialiased`}>
+        <div className="vignette" />
         <CommandLineNav />
-        <div className="page-transition">
-          {children}
-        </div>
+        {children}
       </body>
     </html>
   )

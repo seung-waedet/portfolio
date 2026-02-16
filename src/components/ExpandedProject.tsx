@@ -5,171 +5,63 @@ interface ExpandedProjectProps {
 }
 
 export default function ExpandedProject({ project }: ExpandedProjectProps) {
-  // For client-side, we'll render the raw data as JSON strings for now
-  // In a proper implementation, the conversion would happen on the server
-
   return (
-    <div className="terminal mb-12 group box-glow">
-      <div className="terminal-header">
-        <div className="terminal-dot" />
-        <div className="terminal-dot" />
-        <div className="terminal-dot" />
-        <span>{project.slug}.sh</span>
-      </div>
-
-      <div className="p-8 space-y-8">
-        {/* Header */}
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h2 className="text-3xl font-display font-bold text-lime group-hover:text-magenta transition-colors">
-              {project.title}
-            </h2>
-            <p className="text-xl text-magenta mt-2">{project.tagline}</p>
+    <div className="space-y-16 reveal">
+      {/* Project Meta */}
+      <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+        <div className="space-y-6 max-w-xl">
+          <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.4em] font-bold opacity-30">
+            {project.status === 'live' && <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />}
+            Artifact_{project.slug}
           </div>
-          {project.status === "live" && (
-            <span className="text-sm font-mono text-lime border-2 border-lime px-3 py-1 animate-pulse whitespace-nowrap">
-              [LIVE]
-            </span>
-          )}
+          <h2 className="text-3xl md:text-6xl font-bold tracking-tight uppercase leading-[0.9]">
+            {project.title}
+          </h2>
+          <p className="text-lg font-medium opacity-60">
+            {project.tagline}
+          </p>
         </div>
 
-        {/* Tech stack */}
-        {project.tech && project.tech.length > 0 && (
-          <div className="mb-6">
-            <h3 className="text-xl font-display font-bold text-lime mb-3">
-              STACK
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {project.tech.map((t: any, i: number) => (
-                <span
-                  key={i}
-                  className="border-2 border-lime px-4 py-2 font-mono text-lime hover:bg-lime hover:text-void transition-all"
-                >
-                  {t.name}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Description */}
-        <div className="prose prose-invert max-w-none">
-          <h3 className="text-xl font-display font-bold text-lime">
-            DESCRIPTION
-          </h3>
-          <div
-            className="text-lime-dim leading-relaxed mt-3"
-            dangerouslySetInnerHTML={{ __html: project.descriptionHTML }}
-          />
-        </div>
-
-        {/* API Playground */}
-        {project.curlExample && (
-          <div>
-            <h3 className="text-xl font-display font-bold text-magenta mb-3">
-              API PLAYGROUND
-            </h3>
-            <div className="terminal p-4">
-              <div className="terminal-header">
-                <div className="terminal-dot" />
-                <div className="terminal-dot" />
-                <div className="terminal-dot" />
-                <span>curl_example.sh</span>
-              </div>
-              <div className="p-4">
-                <pre className="text-sm overflow-x-auto">
-                  <code className="text-lime">{project.curlExample}</code>
-                </pre>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Architecture */}
-        {project.architecture && (
-          <div>
-            <h3 className="text-xl font-display font-bold text-lime mb-3">
-              ARCHITECTURE
-            </h3>
-            <div className="terminal p-4">
-              <pre className="text-sm text-lime-dim whitespace-pre-wrap">
-                {project.architecture}
-              </pre>
-            </div>
-          </div>
-        )}
-
-        {/* Benchmarks */}
-        {project.benchmarks && project.benchmarks.length > 0 && (
-          <div>
-            <h3 className="text-xl font-display font-bold text-magenta mb-3">
-              BENCHMARKS
-            </h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              {project.benchmarks.map((bench: any, i: number) => (
-                <div
-                  key={i}
-                  className="border-2 border-lime p-6 hover:bg-lime hover:text-void transition-all group"
-                >
-                  <p className="text-sm font-mono text-lime-dim group-hover:text-void/70 mb-2">
-                    {bench.metric}
-                  </p>
-                  <p className="text-3xl font-display font-bold">
-                    {bench.value}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Challenges */}
-        {project.challenges && (
-          <div>
-            <h3 className="text-xl font-display font-bold text-lime mb-3">
-              CHALLENGES & LEARNINGS
-            </h3>
-            <div className="prose prose-invert max-w-none">
-              <div
-                className="text-lime-dim leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: project.challengesHTML }}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Links */}
-        <div className="flex flex-wrap gap-4 pt-4">
+        <div className="flex items-center gap-8 pt-2">
           {project.liveUrl && (
             <a
               href={project.liveUrl}
               target="_blank"
-              rel="noopener noreferrer"
-              className="border-2 border-lime px-6 py-3 font-mono text-lime hover:bg-lime hover:text-void transition-all"
+              className="text-[10px] uppercase tracking-[0.4em] font-bold border-b-2 border-accent pb-1 hover:opacity-40 transition-opacity"
             >
-              → Live Demo
+              Run_Live
             </a>
           )}
           {project.githubUrl && (
             <a
               href={project.githubUrl}
               target="_blank"
-              rel="noopener noreferrer"
-              className="border-2 border-magenta px-6 py-3 font-mono text-magenta hover:bg-magenta hover:text-void transition-all"
+              className="text-[10px] uppercase tracking-[0.4em] font-bold border-b-2 border-black pb-1 hover:opacity-40 transition-opacity"
             >
-              → GitHub
+              Source_Bin
             </a>
           )}
-          {project.swaggerUrl && (
-            <a
-              href={project.swaggerUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border-2 border-lime px-6 py-3 font-mono text-lime hover:bg-lime hover:text-void transition-all"
-            >
-              → API Docs
-            </a>
-          )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pt-16 border-t border-black/5">
+        <div className="text-[10px] uppercase tracking-[0.4em] font-bold opacity-30">
+          Intelligence
+        </div>
+        <div className="md:col-span-3 space-y-12">
+          <div
+            className="text-lg font-medium leading-relaxed opacity-80 max-w-2xl"
+            dangerouslySetInnerHTML={{ __html: project.descriptionHTML }}
+          />
+
+          <div className="flex flex-wrap gap-x-8 gap-y-4 pt-4">
+            {project.tech?.map((t: any, i: number) => (
+              <div key={i} className="flex flex-col gap-1">
+                <span className="text-[8px] uppercase tracking-widest font-bold opacity-20">Technology</span>
+                <span className="text-xs font-bold uppercase tracking-widest">{t.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

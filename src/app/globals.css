@@ -2,111 +2,133 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --onyx: #050505;
+  --bone: #f5f5f5;
+  --vermilion: #ff3e00;
+  --industrial: #1a1a1a;
+  --slate-rich: #4a4a4a;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
 }
 
 html {
   scroll-behavior: smooth;
+  background: var(--onyx);
 }
 
 body {
-  background: #0f172a;
-  color: #10b981;
+  background: var(--onyx);
+  color: var(--bone);
   overflow-x: hidden;
+  font-feature-settings: "ss01", "ss02", "cv01", "cv02";
 }
 
 ::selection {
-  background: #6366f1;
-  color: #ffffff;
+  background: var(--vermilion);
+  color: var(--onyx);
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: var(--onyx);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #10b981;
+  background: var(--industrial);
   border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6366f1;
+  background: var(--vermilion);
 }
 
-/* Subtle grain texture - lightweight */
+/* Refined Grain */
 .grain {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: transparent url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="3.5" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>') repeat;
-  background-size: 128px 128px;
-  opacity: 0.015;
+  background: transparent url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>') repeat;
+  opacity: 0.035;
   pointer-events: none;
-  z-index: -1;
+  z-index: 9999;
 }
 
-/* Simplified glitch - no animation */
-.glitch {
-  position: relative;
+/* Architectural Utilities */
+.panel {
+  background: var(--industrial);
+  border: 1px solid rgba(245, 245, 245, 0.05);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Terminal window */
-.terminal {
-  background: #0f172a;
-  border: 2px solid #10b981;
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
-  font-family: var(--font-berkeley);
+.panel:hover {
+  border-color: rgba(255, 62, 0, 0.3);
 }
 
-.terminal-header {
-  background: #10b981;
-  color: #0f172a;
-  padding: 8px 12px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.text-vermilion {
+  color: var(--vermilion);
 }
 
-.terminal-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #0f172a;
+.bg-vermilion {
+  background-color: var(--vermilion);
 }
 
-/* Typewriter effect */
-.typewriter {
-  overflow: hidden;
-  border-right: 3px solid #10b981;
-  white-space: nowrap;
-  animation: typewriter 2s steps(40) 1s forwards, blink 1s step-end infinite;
+.stencil-text {
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  font-weight: 700;
 }
 
-
-/* Text Glow Utilities */
-.text-glow {
-  text-shadow: 0 0 10px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3);
+/* Page transitions */
+.page-reveal {
+  animation: reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
 }
 
-.text-glow-magenta {
-  text-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.3);
+@keyframes reveal {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+    filter: blur(10px);
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0);
+  }
 }
 
-/* Box Glow Utilities */
-.box-glow {
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+.stagger-reveal>* {
+  opacity: 0;
+  animation: reveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
-.box-glow-hover:hover {
-  box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
+.stagger-reveal>*:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.stagger-reveal>*:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.stagger-reveal>*:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.stagger-reveal>*:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.stagger-reveal>*:nth-child(5) {
+  animation-delay: 0.5s;
 }

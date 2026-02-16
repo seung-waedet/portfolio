@@ -24,6 +24,94 @@ async function seed() {
   // Seed projects
   const projects = [
     {
+      title: 'AETHER',
+      slug: 'aether',
+      tagline: 'High-end digital infrastructure for the editorial age',
+      description: '<p>Aether is a luxury-refined SaaS landing experience focused on infrastructure and intelligence. It challenges generic SaaS aesthetics with high-contrast serif typography, grain textures, and scroll-driven image reveals.</p><p>The project showcases "Zero Dead Links" maturity, with fully designed sub-pages for Infrastructure, Intelligence, Architecture, and Security.</p>',
+      status: 'live',
+      tech: [
+        { name: 'Next.js' },
+        { name: 'TypeScript' },
+        { name: 'Tailwind CSS' },
+        { name: 'Framer Motion' },
+        { name: 'Lucide React' },
+      ],
+      githubUrl: 'https://github.com/seung-waedet/saas-landing-page',
+      liveUrl: 'https://saas-landing-page-taupe-sigma.vercel.app/',
+      architecture: `
+┌───────────┐      ┌─────────────┐      ┌──────────────┐
+│  AETHER   │─────▶│ Next.js App │─────▶│ High-End UI  │
+│  Systems  │      │   Router    │      │ Componentry  │
+└───────────┘      └─────────────┘      └──────────────┘
+      `,
+      benchmarks: [
+        { metric: 'Navigation Latency', value: '18ms' },
+        { metric: 'Visual Polish', value: 'Production-Grade' },
+        { metric: 'Mobile Performance', value: 'Optimized' },
+      ],
+      featured: true,
+      order: 10,
+    },
+    {
+      title: 'VOLT.dev',
+      slug: 'volt-dev',
+      tagline: 'Industrial-grade developer utilities and system monitoring',
+      description: '<p>VOLT.dev is a brutalist, industrial dashboard designed for high-consequence technical monitoring. It utilizes raw CSS grids, stark black-and-white palettes with construction-orange accents, and simulated data streams.</p><p>Features a comprehensive system status suite including Core metrics, Pulse heartbeat monitoring, and Security threat logging.</p>',
+      status: 'live',
+      tech: [
+        { name: 'Next.js' },
+        { name: 'TypeScript' },
+        { name: 'Tailwind CSS' },
+        { name: 'Framer Motion' },
+        { name: 'Industrial UI' },
+      ],
+      githubUrl: 'https://github.com/seung-waedet/volt-dev',
+      liveUrl: 'https://volt-dev.vercel.app/',
+      architecture: `
+┌─────────────┐     ┌──────────────┐     ┌─────────────┐
+│  Industrial │────▶│  VOLT KERNEL │────▶│  System Log │
+│  Interface  │     │   (App)      │     │  (Active)   │
+└─────────────┘     └──────────────┘     └─────────────┘
+      `,
+      benchmarks: [
+        { metric: 'Refresh Rate', value: '60fps' },
+        { metric: 'Latency', value: 'Sub-millisecond' },
+        { metric: 'Styling', value: 'Raw Brutalist' },
+      ],
+      featured: true,
+      order: 11,
+    },
+    {
+      title: 'FLUID',
+      slug: 'fluid',
+      tagline: 'Organic digital movement for experimental creative studios',
+      description: '<p>FLUID is an experimental agency portfolio that breaks the grid with organic, physics-based motion and zen-like aesthetics. It features soft cream palettes, lavender accents, and liquid mesh gradients.</p><p>Incorporates a functional glassmorphic mobile menu and unique sub-pages for Work, Studio, Labs, and Contact.</p>',
+      status: 'live',
+      tech: [
+        { name: 'Next.js' },
+        { name: 'TypeScript' },
+        { name: 'Tailwind CSS' },
+        { name: 'Framer Motion' },
+        { name: 'Fluid Motion' },
+      ],
+      githubUrl: 'https://github.com/seung-waedet/fluid-agency',
+      liveUrl: 'https://fluid-agency.vercel.app/',
+      architecture: `
+┌─────────────┐     ┌──────────────┐     ┌─────────────┐
+│  Organic    │────▶│  FLUID FLOW  │────▶│  Zen State  │
+│  Input      │     │   (Studio)   │     │  (Output)   │
+└─────────────┘     └──────────────┘     └─────────────┘
+      `,
+      benchmarks: [
+        { metric: 'Animation Smoothness', value: 'Liquid' },
+        { metric: 'Aesthetic Range', value: 'Experimental' },
+        { metric: 'Navigation', value: 'Glassmorphic' },
+      ],
+      featured: true,
+      order: 12,
+    },
+
+    {
       title: 'Linguify',
       slug: 'linguify',
       tagline: 'Video transcription API that actually scales',

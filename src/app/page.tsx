@@ -2,212 +2,86 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import GlitchText from "@/components/GlitchText";
-import TerminalButton from "@/components/TerminalButton";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const [typedText, setTypedText] = useState("");
-  const fullText = "> Building scalable tools and AI-powered solutions_";
 
   useEffect(() => {
     setMounted(true);
-    let i = 0;
-    const timer = setInterval(() => {
-      if (i < fullText.length) {
-        setTypedText(fullText.slice(0, i + 1));
-        i++;
-      } else {
-        clearInterval(timer);
-      }
-    }, 50);
-    return () => clearInterval(timer);
   }, []);
 
+  if (!mounted) return null;
+
   return (
-    <main
-      className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden"
-      suppressHydrationWarning
-    >
-      {/* Animated grid background */}
-      <div className="absolute inset-0 opacity-10">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(#00ff41 1px, transparent 1px), linear-gradient(90deg, #00ff41 1px, transparent 1px)",
-            backgroundSize: "50px 50px",
-          }}
-        />
-      </div>
+    <main className="min-h-screen pt-32 md:pt-64 px-6 max-w-[900px] mx-auto space-y-48 reveal">
+      {/* Hero Statement */}
+      <section className="space-y-12">
+        <h1 className="text-4xl md:text-7xl font-bold leading-tight tracking-tight">
+          Seung-wa Akpan. <br />
+          Software Engineer building <br />
+          <span className="opacity-40">scalable systems & <br /> high-end digital tools.</span>
+        </h1>
 
-      <div className="z-10 max-w-5xl w-full space-y-12 text-center">
-        {/* Main heading */}
-        <div className="space-y-6">
-          <h1 className="text-5xl md:text-8xl font-display font-bold">
-            <span className="text-lime">SEUNG-WA</span>
-            <br />
-            <span className="text-magenta">AKPAN</span>
-          </h1>
-
-          <p className="text-2xl md:text-3xl font-display font-semibold text-lime-dim">
-            Full Stack Developer
-          </p>
-
-          {/* Typewriter tagline */}
-          <p className="text-xl md:text-2xl font-mono text-lime-dim min-h-[2em]">
-            {typedText}
-          </p>
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
-          <Link href="/projects">
-            <TerminalButton variant="primary">$ ls ./projects</TerminalButton>
+        <div className="flex gap-12 pt-8 text-sm font-medium uppercase tracking-widest">
+          <Link href="/projects" className="hover:opacity-40 transition-opacity underline decoration-1 underline-offset-8">
+            ./Work
           </Link>
-          <Link href="/blog">
-            <TerminalButton variant="secondary">$ cat ./writing</TerminalButton>
+          <Link href="/blog" className="hover:opacity-40 transition-opacity underline decoration-1 underline-offset-8">
+            ./Logs
           </Link>
         </div>
+      </section>
 
-        {/* About Section */}
-        <section className="pt-16 max-w-3xl mx-auto">
-          <div className="terminal">
-            <div className="terminal-header">
-              <div className="terminal-dot" />
-              <div className="terminal-dot" />
-              <div className="terminal-dot" />
-              <span>about.txt</span>
-            </div>
-            <div className="p-8 text-left">
-              <h2 className="text-3xl font-display font-bold text-lime mb-4">
-                $ whoami
-              </h2>
-              <p className="text-lime-dim leading-relaxed font-mono">
-                Full Stack Developer with 3+ years of experience building
-                scalable internal tools and client-facing products. Specialized
-                in Python backend development and modern JavaScript frameworks.
-                Proven track record in strengthening backend infrastructure,
-                designing PostgreSQL databases, and integrating AI/LLM APIs.
-                Autonomous developer focused on production-ready code, system
-                reliability, and evolving internal tools into scalable client
-                solutions.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Skills Section */}
-        <section className="pt-12 max-w-4xl mx-auto">
-          <div className="terminal">
-            <div className="terminal-header">
-              <div className="terminal-dot" />
-              <div className="terminal-dot" />
-              <div className="terminal-dot" />
-              <span>skills.json</span>
-            </div>
-            <div className="p-8 text-left">
-              <h2 className="text-3xl font-display font-bold text-lime mb-6">
-                $ cat skills.json
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6 font-mono text-sm">
-                <div>
-                  <h3 className="text-magenta font-bold mb-3">"backend": [</h3>
-                  <ul className="ml-6 space-y-1 text-lime-dim">
-                    <li>"Python (FastAPI)",</li>
-                    <li>"Node.js (Express.js)",</li>
-                    <li>"RESTful APIs",</li>
-                    <li>"PostgreSQL",</li>
-                    <li>"MongoDB"</li>
-                  </ul>
-                  <p className="text-magenta mt-1">],</p>
-                </div>
-
-                <div>
-                  <h3 className="text-magenta font-bold mb-3">"frontend": [</h3>
-                  <ul className="ml-6 space-y-1 text-lime-dim">
-                    <li>"React",</li>
-                    <li>"Next.js",</li>
-                    <li>"JavaScript",</li>
-                    <li>"TypeScript"</li>
-                  </ul>
-                  <p className="text-magenta mt-1">],</p>
-                </div>
-
-                <div>
-                  <h3 className="text-magenta font-bold mb-3">
-                    "databases": [
-                  </h3>
-                  <ul className="ml-6 space-y-1 text-lime-dim">
-                    <li>"PostgreSQL",</li>
-                    <li>"Redis",</li>
-                    <li>"MongoDB"</li>
-                  </ul>
-                  <p className="text-magenta mt-1">],</p>
-                </div>
-
-                <div>
-                  <h3 className="text-magenta font-bold mb-3">
-                    "ai_integrations": [
-                  </h3>
-                  <ul className="ml-6 space-y-1 text-lime-dim">
-                    <li>"LLM APIs",</li>
-                    <li>"API Integrations"</li>
-                  </ul>
-                  <p className="text-magenta mt-1">],</p>
-                </div>
-
-                <div>
-                  <h3 className="text-magenta font-bold mb-3">
-                    "infrastructure": [
-                  </h3>
-                  <ul className="ml-6 space-y-1 text-lime-dim">
-                    <li>"Cloud Deployment",</li>
-                    <li>"Monitoring & Logging",</li>
-                    <li>"Error Handling",</li>
-                    <li>"Rate Limiting",</li>
-                    <li>"Security Best Practices"</li>
-                  </ul>
-                  <p className="text-magenta mt-1">]</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Social Links */}
-        <div className="pt-12 flex gap-6 justify-center items-center font-mono text-lg">
-          <a
-            href="https://github.com/seung-waedet"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-lime hover:text-magenta transition-colors"
-          >
-            GitHub
-          </a>
-          <span className="text-lime-dim">•</span>
-          <a
-            href="https://linkedin.com/in/seungwaakpan"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-lime hover:text-magenta transition-colors"
-          >
-            LinkedIn
-          </a>
-          <span className="text-lime-dim">•</span>
-          <a
-            href="mailto:seungwaakpan@gmail.com"
-            className="text-lime hover:text-magenta transition-colors"
-          >
-            Email
-          </a>
+      {/* About Split */}
+      <section className="grid grid-cols-1 md:grid-cols-4 gap-12 pt-24 border-t border-black/5">
+        <div className="text-[10px] uppercase tracking-[0.4em] font-bold opacity-30">
+          Background
         </div>
-
-        {/* Status bar */}
-        <div className="pt-12 font-mono text-sm text-lime-dim opacity-60">
-          <p>[SYSTEM STATUS: ONLINE] [UPTIME: ∞] [COFFEE: CRITICAL]</p>
+        <div className="md:col-span-3 space-y-8 text-lg font-medium leading-relaxed">
+          <p>
+            Dedicated to the intersection of technical excellence and minimalist design. 1+ years experience in systems engineering.
+          </p>
+          <p className="opacity-60 text-base font-normal">
+            Specializing in high-reliability backends and fluid frontend experiences. Currently developing with Next.js, Python/FastAPI, and PostgreSQL.
+          </p>
         </div>
-      </div>
+      </section>
+
+      {/* Experience Split */}
+      <section className="grid grid-cols-1 md:grid-cols-4 gap-12 pt-24 border-t border-black/5">
+        <div className="text-[10px] uppercase tracking-[0.4em] font-bold opacity-30">
+          Experience
+        </div>
+        <div className="md:col-span-3 space-y-12">
+          <div className="flex justify-between items-start">
+            <div className="space-y-2">
+              <h3 className="font-bold">Software Engineer</h3>
+              <p className="text-sm opacity-60">Independent Engineering</p>
+            </div>
+            <span className="text-[10px] uppercase font-bold opacity-30">2023 — PRES</span>
+          </div>
+
+          <div className="flex justify-between items-start">
+            <div className="space-y-2">
+              <h3 className="font-bold">Full Stack Developer</h3>
+              <p className="text-sm opacity-60">Frontend Solutions</p>
+            </div>
+            <span className="text-[10px] uppercase font-bold opacity-30">2022 — 2023</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Socials */}
+      <footer className="pt-24 border-t border-black/5 pb-32 flex flex-col md:flex-row justify-between gap-12">
+        <div className="flex gap-8 text-[10px] uppercase tracking-[0.4em] font-bold">
+          <a href="https://github.com/seung-waedet" className="hover:opacity-40 transition-opacity">GitHub</a>
+          <a href="https://linkedin.com/in/seungwaakpan" className="hover:opacity-40 transition-opacity">LinkedIn</a>
+          <a href="mailto:seungwaakpan@gmail.com" className="hover:opacity-40 transition-opacity">Email</a>
+        </div>
+        <div className="text-[10px] uppercase tracking-[0.4em] font-bold opacity-30">
+          seung-wa.me — 2025
+        </div>
+      </footer>
     </main>
   );
 }

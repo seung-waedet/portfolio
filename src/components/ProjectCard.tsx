@@ -12,47 +12,39 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
   return (
     <Link href={`/projects/${project.slug}`}>
-      <div className={`terminal group hover:scale-[1.02] transition-all duration-300 h-full ${sizeClass} box-glow hover:box-glow-hover`}>
-        <div className="terminal-header">
-          <div className="terminal-dot" />
-          <div className="terminal-dot" />
-          <div className="terminal-dot" />
-          <span>{project.slug}.sh</span>
+      <div className={`terminal group h-full ${sizeClass} relative`}>
+        <div className="terminal-header items-center justify-between">
+          <div className="flex gap-1.5">
+            <div className="terminal-dot" />
+            <div className="terminal-dot" />
+          </div>
+          <span className="opacity-50 uppercase text-[9px] tracking-tighter">Instance: {project.slug}</span>
         </div>
 
-        <div className="p-6 space-y-4">
-          <div className="flex items-start justify-between gap-4">
-            <h2 className="text-2xl font-display font-bold text-lime group-hover:text-magenta transition-colors">
+        <div className="p-8 space-y-6">
+          <div className="flex flex-col gap-2">
+            <h2 className="text-3xl font-display font-medium text-silver group-hover:text-accent transition-colors tracking-tight">
               {project.title}
             </h2>
             {project.status === 'live' && (
-              <span className="text-xs font-mono text-lime border border-lime px-2 py-1 whitespace-nowrap">
-                [LIVE]
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                <span className="text-[10px] font-mono text-accent uppercase tracking-widest">Live Engine</span>
+              </div>
             )}
           </div>
 
-          <p className="text-lime-dim text-sm">
+          <p className="text-slate-dim text-sm leading-relaxed">
             {project.tagline}
           </p>
 
-          {project.tech && project.tech.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {project.tech.slice(0, 4).map((t: any, i: number) => (
-                <span key={i} className="text-xs font-mono text-magenta">
-                  #{t.name}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {project.apiEndpoint && (
-            <div className="pt-4 border-t border-lime/20">
-              <p className="text-xs font-mono text-lime-dim">
-                <span className="text-magenta">$</span> curl {project.apiEndpoint}
-              </p>
-            </div>
-          )}
+          <div className="flex flex-wrap gap-x-4 gap-y-2 pt-4 border-t border-white/5">
+            {project.tech && project.tech.slice(0, 4).map((t: any, i: number) => (
+              <span key={i} className="text-[10px] font-mono text-slate-dim/60 uppercase">
+                {t.name}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </Link>
