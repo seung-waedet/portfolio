@@ -1,20 +1,24 @@
 # Dependencies
-node_modules
+node_modules/
 .pnp
 .pnp.js
 
 # Testing
-coverage
+coverage/
 
 # Next.js
 .next/
 out/
-build
-dist
+build/
+dist/
+.vercel
 
 # Misc
 .DS_Store
 *.pem
+*.tsbuildinfo
+next-env.d.ts
+.agents/
 
 # Debug
 npm-debug.log*
@@ -24,15 +28,20 @@ yarn-error.log*
 # Local env files
 .env
 .env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Vercel
-.vercel
-
-# TypeScript
-*.tsbuildinfo
-next-env.d.ts
+# Backup folders
+src_backup_brutalist_sim/
 
 # Payload
 media/
 src/payload-types.ts
+
+# OS Files
+Thumbs.db
+
+# Documentation
 *.md

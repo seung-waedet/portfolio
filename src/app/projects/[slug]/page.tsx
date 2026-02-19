@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 import config from "@/payload/payload.config";
 import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
 import { HARDCODED_PROJECTS } from "@/lib/projects";
+import LayoutBlogPost from "@/app/blog/layout";
 
 export const dynamic = "force-dynamic";
 
@@ -19,12 +19,10 @@ export default async function ProjectPage({
 
   let project: any;
   let descriptionHTML = "";
-  let challengesHTML = "";
 
   if (hardcodedProject) {
     project = hardcodedProject;
     descriptionHTML = project.descriptionHTML || "";
-    challengesHTML = project.challengesHTML || "";
   } else {
     // 2. Otherwise, fetch from Payload
     const payload = await getPayload({ config });
@@ -46,98 +44,81 @@ export default async function ProjectPage({
     descriptionHTML = project.description
       ? await convertLexicalToHTML({ data: project.description })
       : "";
-
-    challengesHTML = project.challenges
-      ? await convertLexicalToHTML({ data: project.challenges })
-      : "";
   }
 
   return (
-    <main className="min-h-screen bg-onyx p-8 md:p-24 pt-48">
-      <div className="max-w-[1400px] mx-auto">
-        <header className="mb-32 space-y-12 page-reveal">
-          <div className="flex items-center gap-4 text-slate-rich">
-            <Link href="/projects" className="font-accent text-[10px] uppercase tracking-[0.4em] font-bold hover:text-vermilion transition-colors">
-              Archive
-            </Link>
-            <span className="text-vermilion">/</span>
-            <span className="font-accent text-[10px] uppercase tracking-[0.4em] font-bold text-bone">
-              {project.title}
-            </span>
-          </div>
+    <LayoutBlogPost>
+      <header className="mb-8">
+        <h1 className="text-xl font-medium sm:text-2xl">{project.title}</h1>
+        <p className="mt-2 text-zinc-600 dark:text-zinc-400">
+          {project.tagline}
+        </p>
+        <div className="mt-6 flex gap-4">
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium underline underline-offset-4 hover:text-zinc-500 transition-colors"
+            >
+              Live Project
+            </a>
+          )}
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium underline underline-offset-4 hover:text-zinc-500 transition-colors"
+            >
+              Source Code
+            </a>
+          )}
+        </div>
+      </header>
 
-          <div className="grid md:grid-cols-2 gap-12 items-end">
-            <div className="space-y-6">
-              <h1 className="text-[10vw] md:text-[6vw] font-display font-bold leading-none tracking-[-0.08em] uppercase text-bone">
-                {project.title}
-              </h1>
-              <p className="text-2xl md:text-3xl text-vermilion font-accent font-medium tracking-tight">
-                {project.tagline}
-              </p>
+      <div className="prose prose-gray dark:prose-invert max-w-none">
+        <h2 className="text-lg font-medium">Overview</h2>
+        <div dangerouslySetInnerHTML={{ __html: descriptionHTML }} />
+
+        <h2 className="text-lg font-medium mt-12 pb-2 border-b border-zinc-100 dark:border-zinc-800">Technical Foundation</h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 not-prose mt-8">
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-4">Tech Stack</h3>
+            <div className="flex flex-wrap gap-2">
+              {project.tech?.map((t: any, i: number) => (
+                <span key={i} className="px-2.5 py-1 bg-zinc-100 dark:bg-zinc-800 text-[10px] font-bold uppercase tracking-widest rounded-md">
+                  {t.name}
+                </span>
+              ))}
             </div>
-            <div className="flex md:justify-end gap-6 h-fit pt-8">
-              {project.liveUrl && (
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-8 py-4 bg-vermilion text-onyx font-bold hover:bg-bone transition-all uppercase tracking-widest text-[10px]"
-                >
-                  Live Production
-                </a>
-              )}
-            </div>
-          </div>
-          <div className="h-px w-full bg-white/5" />
-        </header>
-
-        <section className="grid md:grid-cols-12 gap-12 md:gap-24">
-          <div className="md:col-span-8 space-y-24">
-            <div
-              className="text-2xl md:text-3xl font-accent font-light leading-relaxed text-bone/70 italic border-l border-vermilion/20 pl-8"
-              dangerouslySetInnerHTML={{ __html: descriptionHTML }}
-            />
-
-            {project.architecture && (
-              <div className="space-y-8">
-                <h2 className="text-[10px] font-accent font-bold text-vermilion uppercase tracking-[0.5em]">System_Logic</h2>
-                <div className="bg-industrial/40 border border-white/5 p-12 overflow-x-auto font-mono text-xs text-slate-rich">
-                  <pre>{project.architecture}</pre>
-                </div>
-              </div>
-            )}
           </div>
 
-          <div className="md:col-span-4 space-y-12">
-            <div className="space-y-6">
-              <h2 className="text-[10px] font-accent font-bold text-slate-rich uppercase tracking-[0.5em]">Stack_Registry</h2>
-              <div className="flex flex-wrap gap-2">
-                {project.tech?.map((t: any, i: number) => (
-                  <span key={i} className="px-4 py-2 border border-white/5 bg-industrial/20 text-[10px] font-accent font-bold uppercase tracking-widest text-bone/60">
-                    {t.name}
-                  </span>
+          {project.benchmarks && project.benchmarks.length > 0 && (
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-4">Performance</h3>
+              <div className="space-y-4">
+                {project.benchmarks.map((bench: any, i: number) => (
+                  <div key={i} className="flex justify-between items-baseline border-b border-zinc-50 dark:border-zinc-900 pb-1">
+                    <span className="text-xs text-zinc-500">{bench.metric}</span>
+                    <span className="text-sm font-medium">{bench.value}</span>
+                  </div>
                 ))}
               </div>
             </div>
+          )}
+        </div>
 
-            {project.benchmarks && project.benchmarks.length > 0 && (
-              <div className="space-y-6">
-                <h2 className="text-[10px] font-accent font-bold text-slate-rich uppercase tracking-[0.5em]">Load_Performance</h2>
-                <div className="space-y-8">
-                  {project.benchmarks.map((bench: any, i: number) => (
-                    <div key={i} className="group/bench">
-                      <p className="text-[9px] font-accent font-bold text-slate-rich uppercase tracking-[0.4em] mb-1 group-hover/bench:text-vermilion transition-colors">
-                        {bench.metric}
-                      </p>
-                      <p className="text-4xl font-display font-bold text-bone">{bench.value}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
+        {project.architecture && (
+          <>
+            <h2 className="text-lg font-medium mt-12">System Architecture</h2>
+            <div className="bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-100 dark:border-zinc-800 p-6 rounded-xl overflow-x-auto font-mono text-[10px] leading-relaxed">
+              <pre>{project.architecture}</pre>
+            </div>
+          </>
+        )}
       </div>
-    </main>
+    </LayoutBlogPost>
   );
 }

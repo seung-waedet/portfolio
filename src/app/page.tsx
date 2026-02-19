@@ -1,87 +1,90 @@
-"use client";
+import { getPayload } from "payload";
+import config from "@/payload/payload.config";
+import { getAllPosts } from "@/lib/hashnode";
+import { HARDCODED_PROJECTS } from "@/lib/projects";
+import HomeClient from "./HomeClient";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+export const dynamic = "force-dynamic";
 
-export default function Home() {
-  const [mounted, setMounted] = useState(false);
+export default async function Home() {
+  const payload = await getPayload({ config });
+  const projectsFromCMS = await payload.find({
+    collection: "projects",
+    sort: "-order",
+    where: {
+      status: {
+        not_equals: "archived",
+      },
+    },
+  });
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const cmsProjects = projectsFromCMS.docs.map(p => ({
+    name: p.title,
+    description: p.tagline,
+    link: `/projects/${p.slug}`,
+    video: (p as any).previewVideo?.url || "https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/newProfileItem/d898be8a-7037-4c71-af0c-8997239b050d.mp4?_a=DATAdtAAZAA0",
+    id: p.id
+  }));
 
-  if (!mounted) return null;
+  const hardcodedProjects = HARDCODED_PROJECTS.map(p => ({
+    name: p.title,
+    description: p.tagline,
+    link: `/projects/${p.slug}`,
+    video: "https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/newProfileItem/d898be8a-7037-4c71-af0c-8997239b050d.mp4?_a=DATAdtAAZAA0",
+    id: p.id
+  }));
+
+  const allProjects = [...cmsProjects, ...hardcodedProjects].slice(0, 4);
+
+  const hashnodePosts = await getAllPosts();
+  const blogPosts = hashnodePosts.map((post: any) => ({
+    title: post.title,
+    description: post.brief,
+    link: `/blog/${post.slug}`,
+    uid: post.id
+  }));
+
+  const workExperience = [
+    {
+      company: 'KSolutions',
+      title: 'Backend Developer',
+      start: '2025',
+      end: 'Present',
+      link: 'https://ksolutions.com',
+      id: 'work1',
+    },
+    {
+      company: 'Kevin Winter Foundation',
+      title: 'Python Developer',
+      start: '2025',
+      end: 'Present',
+      link: 'https://kevinwinter.foundation',
+      id: 'work2',
+    },
+    {
+      company: 'Resourceful Dev',
+      title: 'Backend Intern',
+      start: '2023',
+      end: '2024',
+      link: '#',
+      id: 'work3',
+    },
+  ];
+
+  const socialLinks = [
+    { label: 'Github', link: 'https://github.com/seung-waedet' },
+    { label: 'LinkedIn', link: 'https://linkedin.com/in/seungwaakpan' },
+  ];
+
+  const email = 'seungwaakpan@gmail.com';
 
   return (
-    <main className="min-h-screen pt-32 md:pt-64 px-6 max-w-[900px] mx-auto space-y-48 reveal">
-      {/* Hero Statement */}
-      <section className="space-y-12">
-        <h1 className="text-4xl md:text-7xl font-bold leading-tight tracking-tight">
-          Seung-wa Akpan. <br />
-          Software Engineer building <br />
-          <span className="opacity-40">scalable systems & <br /> high-end digital tools.</span>
-        </h1>
-
-        <div className="flex gap-12 pt-8 text-sm font-medium uppercase tracking-widest">
-          <Link href="/projects" className="hover:opacity-40 transition-opacity underline decoration-1 underline-offset-8">
-            ./Work
-          </Link>
-          <Link href="/blog" className="hover:opacity-40 transition-opacity underline decoration-1 underline-offset-8">
-            ./Logs
-          </Link>
-        </div>
-      </section>
-
-      {/* About Split */}
-      <section className="grid grid-cols-1 md:grid-cols-4 gap-12 pt-24 border-t border-black/5">
-        <div className="text-[10px] uppercase tracking-[0.4em] font-bold opacity-30">
-          Background
-        </div>
-        <div className="md:col-span-3 space-y-8 text-lg font-medium leading-relaxed">
-          <p>
-            Dedicated to the intersection of technical excellence and minimalist design. 1+ years experience in systems engineering.
-          </p>
-          <p className="opacity-60 text-base font-normal">
-            Specializing in high-reliability backends and fluid frontend experiences. Currently developing with Next.js, Python/FastAPI, and PostgreSQL.
-          </p>
-        </div>
-      </section>
-
-      {/* Experience Split */}
-      <section className="grid grid-cols-1 md:grid-cols-4 gap-12 pt-24 border-t border-black/5">
-        <div className="text-[10px] uppercase tracking-[0.4em] font-bold opacity-30">
-          Experience
-        </div>
-        <div className="md:col-span-3 space-y-12">
-          <div className="flex justify-between items-start">
-            <div className="space-y-2">
-              <h3 className="font-bold">Software Engineer</h3>
-              <p className="text-sm opacity-60">Independent Engineering</p>
-            </div>
-            <span className="text-[10px] uppercase font-bold opacity-30">2023 — PRES</span>
-          </div>
-
-          <div className="flex justify-between items-start">
-            <div className="space-y-2">
-              <h3 className="font-bold">Full Stack Developer</h3>
-              <p className="text-sm opacity-60">Frontend Solutions</p>
-            </div>
-            <span className="text-[10px] uppercase font-bold opacity-30">2022 — 2023</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Socials */}
-      <footer className="pt-24 border-t border-black/5 pb-32 flex flex-col md:flex-row justify-between gap-12">
-        <div className="flex gap-8 text-[10px] uppercase tracking-[0.4em] font-bold">
-          <a href="https://github.com/seung-waedet" className="hover:opacity-40 transition-opacity">GitHub</a>
-          <a href="https://linkedin.com/in/seungwaakpan" className="hover:opacity-40 transition-opacity">LinkedIn</a>
-          <a href="mailto:seungwaakpan@gmail.com" className="hover:opacity-40 transition-opacity">Email</a>
-        </div>
-        <div className="text-[10px] uppercase tracking-[0.4em] font-bold opacity-30">
-          seung-wa.me — 2025
-        </div>
-      </footer>
-    </main>
+    <HomeClient
+      projects={allProjects}
+      blogPosts={blogPosts}
+      workExperience={workExperience}
+      socialLinks={socialLinks}
+      email={email}
+    />
   );
 }

@@ -13,12 +13,12 @@ export const Projects: CollectionConfig = {
     {
       name: "title",
       type: "text",
-      required: true,
+      required: false,
     },
     {
       name: "slug",
       type: "text",
-      required: true,
+      required: false,
       unique: true,
       admin: {
         description: "URL-friendly version of the title",
@@ -27,17 +27,17 @@ export const Projects: CollectionConfig = {
     {
       name: "tagline",
       type: "text",
-      required: true,
+      required: false,
     },
     {
       name: "description",
       type: "richText",
-      required: true,
+      required: false,
     },
     {
       name: "status",
       type: "select",
-      required: true,
+      required: false,
       options: [
         { label: "Live", value: "live" },
         { label: "In Development", value: "dev" },
@@ -52,7 +52,7 @@ export const Projects: CollectionConfig = {
         {
           name: "name",
           type: "text",
-          required: true,
+          required: false,
         },
       ],
     },
@@ -96,12 +96,12 @@ export const Projects: CollectionConfig = {
         {
           name: "metric",
           type: "text",
-          required: true,
+          required: false,
         },
         {
           name: "value",
           type: "text",
-          required: true,
+          required: false,
         },
       ],
     },
