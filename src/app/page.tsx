@@ -23,7 +23,7 @@ export default async function Home() {
     description: p.tagline,
     link: `/projects/${p.slug}`,
     video: (p as any).previewVideo?.url || "https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/newProfileItem/d898be8a-7037-4c71-af0c-8997239b050d.mp4?_a=DATAdtAAZAA0",
-    id: p.id
+    id: String(p.id)
   }));
 
   const hardcodedProjects = HARDCODED_PROJECTS.map(p => ({
@@ -41,7 +41,10 @@ export default async function Home() {
     title: post.title,
     description: post.brief,
     link: `/blog/${post.slug}`,
-    uid: post.id
+    uid: post.id,
+    date: post.publishedAt,
+    coverImage: post.coverImage?.url || null,
+    readTime: post.readTimeInMinutes,
   }));
 
   const workExperience = [
