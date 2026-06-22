@@ -22,7 +22,7 @@ ENV PUBLIC_SANITY_PROJECT_ID=$PUBLIC_SANITY_PROJECT_ID \
     STRAVA_REFRESH_TOKEN=$STRAVA_REFRESH_TOKEN \
     STRAVA_ATHLETE_ID=$STRAVA_ATHLETE_ID
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
