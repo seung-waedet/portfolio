@@ -19,11 +19,11 @@ ENV PUBLIC_SANITY_PROJECT_ID=$PUBLIC_SANITY_PROJECT_ID \
     STRAVA_REFRESH_TOKEN=$STRAVA_REFRESH_TOKEN \
     STRAVA_ATHLETE_ID=$STRAVA_ATHLETE_ID
 
-COPY package*.json ./
-# npm install (not ci) because some optional deps (e.g. sharp's platform-specific
-# binaries) get pruned from the lockfile when generated on a different OS/CPU
-# than the build target. Slight reproducibility tradeoff, acceptable for a
-# personal static site.
+COPY package.json ./
+# Intentionally NOT copying package-lock.json. Lockfiles generated on
+# macOS routinely miss the Linux-musl optional binaries that sharp and
+# rollup require on Alpine. Letting npm resolve fresh on the build
+# platform sidesteps npm/cli#4828 entirely.
 RUN npm install --no-audit --no-fund
 
 COPY . .
