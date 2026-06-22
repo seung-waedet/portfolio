@@ -20,7 +20,11 @@ ENV PUBLIC_SANITY_PROJECT_ID=$PUBLIC_SANITY_PROJECT_ID \
     STRAVA_ATHLETE_ID=$STRAVA_ATHLETE_ID
 
 COPY package*.json ./
-RUN npm ci
+# npm install (not ci) because some optional deps (e.g. sharp's platform-specific
+# binaries) get pruned from the lockfile when generated on a different OS/CPU
+# than the build target. Slight reproducibility tradeoff, acceptable for a
+# personal static site.
+RUN npm install --no-audit --no-fund
 
 COPY . .
 RUN npm run build
