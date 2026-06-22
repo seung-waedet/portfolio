@@ -1,0 +1,187 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import RowList from "../components/RowList.astro";
+import {
+  getAbout,
+  getFeaturedProjects,
+  getWork,
+  getCurrentlyReading,
+  getLikes,
+} from "../lib/queries";
+import { fetchStravaMiles } from "../lib/strava";
+import { fetchHashnodePosts } from "../lib/hashnode";
+
+// Pull from CMS + APIs in parallel. Each returns null/[] if env is missing.
+const [about, projects, work, books, likes, miles, posts] = await Promise.all([
+  getAbout(),
+  getFeaturedProjects(),
+  getWork(),
+  getCurrentlyReading(),
+  getLikes(),
+  fetchStravaMiles().catch(() => null),
+  fetchHashnodePosts(4).catch(() => []),
+]);
+
+// --- Verified fallbacks (CV-grounded) ---
+
+const FALLBACK = {
+  name: "Seung-wa Akpan",
+  initial: "s",
+  tagline: "software developer · python & node.js · ai/llm integrations",
+  intro:
+    `I design and ship scalable web applications and APIs across Python and Node.js — including RAG pipelines, <em>LLM integrations</em>, and real-time systems. Currently building backend services at <em>KSolutions</em> and AI platforms at <em>Kevin Winter Foundation</em>.`,
+  socials: [
+    { label: "github",   href: "https://github.com/seung-waedet" },
+    { label: "linkedin", href: "https://linkedin.com/in/seungwaakpan" },
+    { label: "email",    href: "mailto:seungwaakpan@gmail.com" },
+  ],
+  // Real personal projects from CV
+  building: [
+    { icon: "✦", title: "Document RAG Service", sub: "RAG API — chunk, embed, query PDFs/DOCX/TXT with an LLM", end: "2025", href: "/projects/document-rag-service" },
+    { icon: "◇", title: "Wallet Service",       sub: "Digital wallet API with Paystack + OAuth + JWT",          end: "2025", href: "/projects/wallet-service" },
+    { icon: "▷", title: "Event Chat Backend",   sub: "Real-time WebSocket dialogue for live event Q&A",          end: "2024", href: "/projects/event-chat-backend" },
+  ],
+  // Top 3 most recent roles (full list lives on /about)
+  work: [
+    { icon: "§", title: "KSolutions",              sub: "Backend Developer Intern (NYSC) · Node.js / NestJS", end: "Feb 2025 — now", href: "#" },
+    { icon: "§", title: "Kevin Winter Foundation", sub: "Python Developer · Flask · Celery · LLM pipelines",  end: "Jan 2025 — now", href: "#" },
+    { icon: "§", title: "HNG Tech",                sub: "Backend Engineering Intern · NestJS · Gemini",       end: "Oct — Dec 2025", href: "#" },
+  ],
+};
+
+// --- Render bindings (CMS wins when populated) ---
+
+const name     = about?.name     ?? FALLBACK.name;
+const initial  = about?.initial  ?? FALLBACK.initial;
+const tagline  = about?.tagline  ?? FALLBACK.tagline;
+const intro    = FALLBACK.intro; // TODO: portable-text renderer for about.intro
+const socials  = about?.socials?.length ? about.socials : FALLBACK.socials;
+
+const buildingRows = projects.length
+  ? projects.map((p) => ({
+      icon: p.icon ?? "·",
+      title: p.title,
+      sub: p.tagline ?? "",
+      end: p.year ?? "",
+      href: `/projects/${p.slug.current}`,
+    }))
+  : FALLBACK.building;
+
+const workRows = work.length
+  ? work.map((w) => ({
+      icon: "§",
+      title: w.company,
+      sub: w.role,
+      end: `${new Date(w.startDate).getFullYear()} — ${w.endDate ? new Date(w.endDate).getFullYear() : "now"}`,
+      href: w.url,
+    }))
+  : FALLBACK.work;
+
+// Sections below ONLY render when data exists — no inventions.
+const showReading = books.length > 0;
+const showMiles   = miles !== null;
+const showWriting = posts.length > 0;
+const showLiked   = likes.length > 0;
+
+const readingRows = books.map((b) => ({
+  icon: b.icon ?? "❦",
+  title: b.title,
+  sub: b.note ? `${b.author} · ${b.note}` : b.author,
+  end: b.currentPage && b.totalPages ? `p.${b.currentPage} / ${b.totalPages}` : "",
+}));
+
+const notesRows = posts.map((p) => ({
+  title: p.title,
+  end: new Date(p.publishedAt).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }),
+  href: p.url,
+}));
+---
+
+<Base title={`${name} — software developer`}>
+  <Header
+    name={name}
+    initial={initial}
+    tagline={tagline}
+    intro={intro}
+    socials={socials}
+  />
+
+  <section>
+    <h2>building</h2>
+    <RowList rows={buildingRows} />
+  </section>
+
+  <section>
+    <h2>work</h2>
+    <RowList rows={workRows} />
+    <p class="more"><a href="/about">full history →</a></p>
+  </section>
+
+  {showReading && (
+    <section>
+      <h2>currently reading</h2>
+      <RowList rows={readingRows} />
+    </section>
+  )}
+
+  {showMiles && miles && (
+    <section>
+      <h2>miles · {new Date().getFullYear()}</h2>
+      <div class="miles">
+        <span><strong>{miles.ytd}</strong> <small>mi YTD</small></span>
+        <span><strong>{miles.longest}</strong> <small>longest</small></span>
+        <span><strong>{miles.runs}</strong> <small>runs</small></span>
+        <span><strong>{miles.pace}</strong> <small>avg pace</small></span>
+      </div>
+    </section>
+  )}
+
+  {showWriting && (
+    <section>
+      <h2>writing</h2>
+      <RowList rows={notesRows} noIcon />
+    </section>
+  )}
+
+  {showLiked && (
+    <section>
+      <h2>liked</h2>
+      <p class="liked">
+        {likes.map((l, i) => (
+          <>
+            {l.label}
+            {i < likes.length - 1 && <span class="dot">·</span>}
+          </>
+        ))}
+      </p>
+    </section>
+  )}
+
+  <Footer />
+</Base>
+
+<style>
+  .more {
+    margin-top: 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .more a { color: var(--muted); }
+  .more a:hover { color: var(--accent); }
+
+  .miles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+  .miles span { display: inline-flex; align-items: baseline; gap: 6px; }
+  .miles strong { font-weight: 500; color: var(--accent); }
+  .miles small { color: var(--muted); font-size: 12px; }
+
+  .liked { font-size: 15.5px; line-height: 1.85; }
+  .liked .dot { color: var(--faint); margin: 0 8px; }
+</style>

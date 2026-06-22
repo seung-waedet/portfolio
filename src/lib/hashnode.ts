@@ -1,91 +1,58 @@
-export const HASHNODE_GQL_ENDPOINT = 'https://gql.hashnode.com'
-// TODO: Replace with your actual Hashnode publication host (e.g., seungwa.hashnode.dev)
-export const HASHNODE_HOST = 'hng-stage-0-task.hashnode.dev'
+/**
+ * Build-time Hashnode fetch.
+ *
+ * Required env:
+ *   PUBLIC_HASHNODE_HOST   e.g. "seungwaakpan.hashnode.dev"
+ *
+ * No API key required for public posts. Returns [] if env missing.
+ */
 
-export async function gql(query: string, variables: any = {}) {
-  const res = await fetch(HASHNODE_GQL_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      query,
-      variables,
-    }),
-    next: { revalidate: 3600 }, // Cache for 1 hour
-  })
+export type HashnodePost = {
+  id: string;
+  title: string;
+  slug: string;
+  brief?: string;
+  publishedAt: string;
+  readTimeInMinutes?: number;
+  url: string;
+};
 
-  if (!res.ok) {
-    throw new Error('Failed to fetch from Hashnode API')
-  }
+export async function fetchHashnodePosts(limit = 6): Promise<HashnodePost[]> {
+  const host = import.meta.env.PUBLIC_HASHNODE_HOST;
+  if (!host) return [];
 
-  const json = await res.json()
-  if (json.errors) {
-    console.error('Hashnode Errors:', json.errors)
-    throw new Error('Hashnode API returned errors')
-  }
-
-  return json.data
-}
-
-export async function getAllPosts() {
   const query = `
-    query GetPosts($host: String!) {
+    query Posts($host: String!, $first: Int!) {
       publication(host: $host) {
-        posts(first: 10) {
+        posts(first: $first) {
           edges {
             node {
               id
               title
-              brief
               slug
+              brief
               publishedAt
               readTimeInMinutes
-              coverImage {
-                url
-              }
-              tags {
-                name
-                slug
-              }
+              url
             }
           }
         }
       }
     }
-  `
+  `;
 
-  const data = await gql(query, { host: HASHNODE_HOST })
-  return data.publication?.posts?.edges?.map((edge: any) => edge.node) || []
-}
+  const res = await fetch("https://gql.hashnode.com/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query, variables: { host, first: limit } }),
+  });
 
-export async function getPostBySlug(slug: string) {
-  const query = `
-    query GetPost($host: String!, $slug: String!) {
-      publication(host: $host) {
-        post(slug: $slug) {
-          id
-          title
-          subtitle
-          brief
-          slug
-          publishedAt
-          readTimeInMinutes
-          content {
-            markdown
-          }
-          coverImage {
-            url
-          }
-          tags {
-            name
-            slug
-          }
-        }
-      }
-    }
-  `
+  if (!res.ok) {
+    console.warn("[hashnode] request failed:", res.status);
+    return [];
+  }
 
-  const data = await gql(query, { host: HASHNODE_HOST, slug })
-  return data.publication?.post
+  const json: { data?: { publication?: { posts?: { edges?: { node: HashnodePost }[] } } } } =
+    await res.json();
+  return json.data?.publication?.posts?.edges?.map((e) => e.node) ?? [];
 }

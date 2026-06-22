@@ -1,0 +1,22 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div>© {year} · set in IBM Plex</div>
+  <div><a href="#top">↑ top</a></div>
+</footer>
+
+<style>
+  footer {
+    margin-top: 96px;
+    padding-top: 18px;
+    border-top: 1px solid var(--faint);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+  footer a:hover { color: var(--accent); }
+</style>

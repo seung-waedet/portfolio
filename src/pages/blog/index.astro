@@ -1,0 +1,43 @@
+---
+import Base from "../../layouts/Base.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import RowList from "../../components/RowList.astro";
+import { getAbout } from "../../lib/queries";
+import { fetchHashnodePosts } from "../../lib/hashnode";
+
+const [about, posts] = await Promise.all([
+  getAbout(),
+  fetchHashnodePosts(30).catch(() => []),
+]);
+
+const rows = posts.map((p) => ({
+  title: p.title,
+  sub: p.brief ?? undefined,
+  end: new Date(p.publishedAt).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }),
+  href: p.url,
+}));
+
+const name    = about?.name    ?? "Seung-wa Akpan";
+const initial = about?.initial ?? "s";
+const tagline = about?.tagline ?? "software developer · python & node.js · ai/llm integrations";
+---
+
+<Base title={`Blog — ${name}`} description="Long-form posts on backend systems, infrastructure, and craft.">
+  <Header
+    name={name}
+    initial={initial}
+    tagline={tagline}
+    intro={`Long-form posts on backend systems, infrastructure, and craft.`}
+    socials={about?.socials ?? []}
+  />
+
+  {rows.length > 0 && (
+    <section>
+      <h2>all posts</h2>
+      <RowList rows={rows} />
+    </section>
+  )}
+
+  <Footer />
+</Base>

@@ -1,0 +1,36 @@
+---
+interface Row {
+  icon?: string;
+  title: string;
+  sub?: string;
+  end?: string;
+  href?: string;
+}
+
+interface Props {
+  rows: Row[];
+  noIcon?: boolean;
+}
+
+const { rows, noIcon = false } = Astro.props;
+
+const Tag = (href: string | undefined) => (href ? "a" : "div");
+---
+
+<div class="row-list">
+  {
+    rows.map((r) => {
+      const Element = r.href ? "a" : "div";
+      return (
+        <Element href={r.href} class={`row ${noIcon ? "no-icon" : ""}`}>
+          {!noIcon && <span class="row-icon">{r.icon ?? "·"}</span>}
+          <span class="row-title">
+            {r.title}
+            {r.sub && <span class="row-sub">{r.sub}</span>}
+          </span>
+          {r.end && <span class="row-end">{r.end}</span>}
+        </Element>
+      );
+    })
+  }
+</div>

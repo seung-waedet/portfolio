@@ -1,0 +1,47 @@
+---
+import Base from "../../layouts/Base.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import RowList from "../../components/RowList.astro";
+import { getAbout, getAllProjects } from "../../lib/queries";
+
+const [about, projects] = await Promise.all([getAbout(), getAllProjects()]);
+
+// Real personal projects from CV
+const FALLBACK_PROJECTS = [
+  { icon: "✦", title: "Document RAG Service", sub: "RAG API — chunk, embed, query PDFs/DOCX/TXT with an LLM", end: "2025", href: "/projects/document-rag-service" },
+  { icon: "◇", title: "Wallet Service",       sub: "Digital wallet API with Paystack + OAuth + JWT",          end: "2025", href: "/projects/wallet-service" },
+  { icon: "▷", title: "Event Chat Backend",   sub: "Real-time WebSocket dialogue for live event Q&A",          end: "2024", href: "/projects/event-chat-backend" },
+];
+
+const rows = projects.length
+  ? projects.map((p) => ({
+      icon: p.icon ?? "·",
+      title: p.title,
+      sub: p.tagline ?? "",
+      end: p.year ?? "",
+      href: `/projects/${p.slug.current}`,
+    }))
+  : FALLBACK_PROJECTS;
+
+const name    = about?.name    ?? "Seung-wa Akpan";
+const initial = about?.initial ?? "s";
+const tagline = about?.tagline ?? "software developer · python & node.js · ai/llm integrations";
+---
+
+<Base title={`Projects — ${name}`}>
+  <Header
+    name={name}
+    initial={initial}
+    tagline={tagline}
+    intro="Backend services I've built. Code lives on GitHub; write-ups are added as I get to them."
+    socials={about?.socials ?? []}
+  />
+
+  <section>
+    <h2>all projects</h2>
+    <RowList rows={rows} />
+  </section>
+
+  <Footer />
+</Base>

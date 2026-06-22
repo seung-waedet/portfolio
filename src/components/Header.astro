@@ -1,0 +1,124 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+
+interface Props {
+  name: string;
+  initial: string;
+  tagline: string;
+  intro: string;
+  socials: { label: string; href: string }[];
+}
+
+const { name, initial, tagline, intro, socials } = Astro.props;
+
+const NAV = [
+  { label: "home",     href: "/" },
+  { label: "projects", href: "/projects" },
+  { label: "about",    href: "/about" },
+  { label: "blog",     href: "/blog" },
+];
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`);
+---
+
+<header class="hero">
+  <div class="topbar">
+    <nav class="nav">
+      {NAV.map((n) => (
+        <a href={n.href} class={isActive(n.href) ? "active" : undefined} aria-current={isActive(n.href) ? "page" : undefined}>
+          {n.label}
+        </a>
+      ))}
+    </nav>
+    <ThemeToggle />
+  </div>
+
+  <div class="avatar">{initial}</div>
+  <h1>{name}</h1>
+  <p class="tagline">{tagline}</p>
+  <p class="intro" set:html={intro} />
+
+  <div class="socials">
+    {socials.map((s) => <a href={s.href}>{s.label}</a>)}
+  </div>
+</header>
+
+<style>
+  .hero { margin-bottom: 8px; }
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 64px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .nav {
+    display: flex;
+    gap: 20px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .nav a {
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.18s ease, border-color 0.18s ease;
+  }
+  .nav a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .nav a.active {
+    color: var(--text);
+    border-color: var(--accent);
+  }
+  .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg);
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-style: italic;
+  }
+  .tagline {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 28px;
+    font-family: var(--font-mono);
+  }
+  .intro {
+    font-size: 16.5px;
+    margin-bottom: 28px;
+    max-width: 560px;
+  }
+  .intro :global(em) {
+    color: var(--accent);
+    font-style: italic;
+    font-family: var(--font-serif);
+  }
+  .socials {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  .socials a {
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+  }
+  .socials a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+</style>

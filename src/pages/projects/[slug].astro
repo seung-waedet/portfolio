@@ -1,0 +1,200 @@
+---
+import Base from "../../layouts/Base.astro";
+import Footer from "../../components/Footer.astro";
+import ThemeToggle from "../../components/ThemeToggle.astro";
+import { getAllProjects, getProjectBySlug } from "../../lib/queries";
+
+export async function getStaticPaths() {
+  const projects = await getAllProjects();
+  const slugs = projects.length
+    ? projects.map((p) => ({ slug: p.slug.current }))
+    : [
+        { slug: "document-rag-service" },
+        { slug: "wallet-service" },
+        { slug: "event-chat-backend" },
+      ];
+  return slugs.map((s) => ({ params: { slug: s.slug } }));
+}
+
+const { slug } = Astro.params;
+const project = await getProjectBySlug(slug!);
+
+// Verified personal projects from CV — used until Sanity is populated.
+const FALLBACKS: Record<string, {
+  title: string;
+  tagline: string;
+  year: string;
+  tech: string[];
+  bullets: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+}> = {
+  "document-rag-service": {
+    title: "Document RAG Service",
+    tagline: "A Retrieval-Augmented Generation API for querying your own documents.",
+    year: "2025",
+    tech: ["NestJS", "TypeScript", "ChromaDB", "LangChain", "OpenAI / OpenRouter", "Docker"],
+    bullets: [
+      "Built a RAG API that processes uploaded PDF, DOCX, and TXT files, chunks and embeds them into ChromaDB, and answers natural-language questions using an LLM.",
+      "Leveraged LangChain's RecursiveCharacterTextSplitter for intelligent document chunking and OpenRouter for flexible LLM provider access (Meta Llama 3).",
+      "Fully documented via Swagger; containerised with Docker Compose for local vector database management.",
+    ],
+    githubUrl: "https://github.com/seung-waedet/document-rag-service",
+  },
+  "wallet-service": {
+    title: "Wallet Service",
+    tagline: "A secure, scalable digital wallet API with Paystack integration.",
+    year: "2025",
+    tech: ["NestJS", "TypeScript", "PostgreSQL", "Paystack", "Google OAuth", "JWT"],
+    bullets: [
+      "Developed a digital wallet API supporting user registration, JWT + Google OAuth authentication, and full transaction management (deposits, withdrawals, transfers).",
+      "Integrated Paystack for payments processing and TypeORM for PostgreSQL schema management and migrations.",
+      "Implemented security best practices including bcrypt password hashing, SQL injection prevention, and HTTPS enforcement.",
+    ],
+    githubUrl: "https://github.com/seung-waedet/wallet-service",
+  },
+  "event-chat-backend": {
+    title: "Event Chat Backend",
+    tagline: "A real-time WebSocket dialogue system for audience engagement at physical events.",
+    year: "2024",
+    tech: ["Node.js", "WebSockets", "Real-time Systems"],
+    bullets: [
+      "Designed and implemented a real-time, web-based dialogue system for audience engagement at physical events.",
+      "Focused on low-latency WebSocket communication to support live Q&A and interactive participation at scale.",
+    ],
+    githubUrl: "https://github.com/seung-waedet/event-chat-backend",
+  },
+};
+
+const display = project ?? (FALLBACKS[slug!] ? {
+  title: FALLBACKS[slug!].title,
+  tagline: FALLBACKS[slug!].tagline,
+  year: FALLBACKS[slug!].year,
+  tech: FALLBACKS[slug!].tech,
+  bullets: FALLBACKS[slug!].bullets,
+  githubUrl: FALLBACKS[slug!].githubUrl,
+  liveUrl: FALLBACKS[slug!].liveUrl,
+} : null);
+---
+
+<Base title={display ? `${display.title} — Seung-wa Akpan` : "Not found"}>
+  <div class="topbar">
+    <a class="back" href="/projects">← all projects</a>
+    <ThemeToggle />
+  </div>
+
+  {
+    display ? (
+      <article>
+        <p class="year">{display.year}</p>
+        <h1>{display.title}</h1>
+        <p class="tagline">{display.tagline}</p>
+
+        {display.tech && display.tech.length > 0 && (
+          <ul class="stack">
+            {display.tech.map((t) => <li>{t}</li>)}
+          </ul>
+        )}
+
+        <div class="links">
+          {display.liveUrl   && <a href={display.liveUrl}   class="link">live ↗</a>}
+          {display.githubUrl && <a href={display.githubUrl} class="link">github ↗</a>}
+        </div>
+
+        {"bullets" in display && display.bullets && display.bullets.length > 0 && (
+          <ul class="bullets">
+            {display.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        )}
+      </article>
+    ) : (
+      <p>Project not found.</p>
+    )
+  }
+
+  <Footer />
+</Base>
+
+<style>
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 56px;
+  }
+  .back {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .back:hover { color: var(--accent); }
+
+  .year {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-bottom: 12px;
+  }
+  .tagline {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 540px;
+    margin-bottom: 32px;
+  }
+
+  .stack {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .stack li {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    border: 1px solid var(--faint);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .links { display: flex; gap: 16px; margin-bottom: 48px; }
+  .link {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--accent);
+    border-bottom: 1px solid var(--faint);
+    padding-bottom: 2px;
+  }
+  .link:hover { border-color: var(--accent); }
+
+  .bullets {
+    list-style: none;
+    margin-top: 8px;
+  }
+  .bullets li {
+    padding: 12px 0 12px 20px;
+    border-bottom: 1px solid var(--faint);
+    font-size: 15.5px;
+    line-height: 1.55;
+    position: relative;
+  }
+  .bullets li::before {
+    content: "·";
+    color: var(--accent);
+    position: absolute;
+    left: 4px;
+    top: 12px;
+    font-size: 18px;
+  }
+</style>

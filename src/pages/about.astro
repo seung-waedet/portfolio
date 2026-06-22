@@ -1,0 +1,196 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import RowList from "../components/RowList.astro";
+import { getAbout, getWork } from "../lib/queries";
+
+const [about, work] = await Promise.all([getAbout(), getWork()]);
+
+// Verified work history from CV
+const FALLBACK_WORK = [
+  { icon: "§", title: "KSolutions",              sub: "Backend Developer Intern (NYSC) · Node.js · Express · NestJS · Docker", end: "Feb 2025 — now", href: "#" },
+  { icon: "§", title: "Kevin Winter Foundation", sub: "Python Developer · Flask · Celery · Redis · RunPod GPU · Whisper · M2M100", end: "Jan 2025 — now", href: "#" },
+  { icon: "§", title: "HNG Tech",                sub: "Backend Engineering Intern · NestJS · Gemini · MongoDB · Socket.IO",   end: "Oct — Dec 2025", href: "#" },
+  { icon: "§", title: "TIIDELAB",                sub: "Python Developer Pre-fellow · AI text-to-image service",                end: "Jun — Aug 2024", href: "#" },
+  { icon: "§", title: "Resourceful Dev",         sub: "Backend Developer Intern · Node.js · Express · Redis · JWT",            end: "Jul — Sep 2023", href: "#" },
+  { icon: "§", title: "Digital Box",             sub: "Web Developer Intern · HTML/CSS/JS · WordPress",                         end: "Jul — Sep 2022", href: "#" },
+];
+
+// Timeline reconciled with CV dates
+const FALLBACK_TIMELINE = [
+  { year: "2025 — now",   event: "Backend Developer Intern at KSolutions (NYSC); Python Developer at Kevin Winter Foundation." },
+  { year: "Oct–Dec 2025", event: "Backend Engineering Intern at HNG Tech — AI Bible chat platform on NestJS + Gemini." },
+  { year: "2024",         event: "Diploma in Backend Engineering at AltSchool Africa; ALX AI Career Essentials; Python Developer at TIIDELAB Pre-fellowship." },
+  { year: "2023",         event: "Backend Developer Intern at Resourceful Dev (Abuja)." },
+  { year: "Aug 2022 — 2023", event: "Founded and led the first Google Developer Student Club chapter at Arthur Jarvis University." },
+  { year: "2022",         event: "Web Developer Intern at Digital Box (Abuja)." },
+  { year: "Feb 2021",     event: "Started B.Sc Computer Science at Arthur Jarvis University." },
+];
+
+const CERTIFICATIONS = [
+  { title: "AltSchool Africa Backend Engineering Diploma", year: "2024" },
+  { title: "ALX AI Career Essentials Certificate",          year: "2024" },
+  { title: "HNG Tech Backend Engineering Finalist",          year: "2025" },
+];
+
+const workRows = work.length
+  ? work.map((w) => ({
+      icon: "§",
+      title: w.company,
+      sub: w.role,
+      end: `${new Date(w.startDate).getFullYear()} — ${w.endDate ? new Date(w.endDate).getFullYear() : "now"}`,
+      href: w.url,
+    }))
+  : FALLBACK_WORK;
+
+// Skills lifted verbatim from CV
+const STACK = [
+  // Languages & Frameworks
+  "Python", "Node.js", "TypeScript", "JavaScript", "FastAPI", "Flask", "NestJS", "Express.js", "React",
+  // Databases & Messaging
+  "PostgreSQL", "MySQL", "MongoDB", "Redis", "ChromaDB", "Celery", "BullMQ",
+  // AI / ML
+  "OpenAI", "Google Gemini", "LangChain", "RAG", "OpenAI Whisper", "M2M100", "Vector Embeddings",
+  // Infrastructure
+  "Docker", "AWS", "Linux", "CI/CD", "Git", "RunPod",
+  // APIs & Security
+  "WebSockets", "JWT", "OAuth 2.0", "Rate Limiting",
+  // Testing
+  "Jest", "pytest", "Swagger/OpenAPI", "Postman",
+];
+
+const name    = about?.name    ?? "Seung-wa Akpan";
+const initial = about?.initial ?? "s";
+const tagline = about?.tagline ?? "software developer · python & node.js · ai/llm integrations";
+const socials = about?.socials?.length ? about.socials : [
+  { label: "github",   href: "https://github.com/seung-waedet" },
+  { label: "linkedin", href: "https://linkedin.com/in/seungwaakpan" },
+  { label: "email",    href: "mailto:seungwaakpan@gmail.com" },
+];
+---
+
+<Base title={`About — ${name}`}>
+  <Header
+    name={name}
+    initial={initial}
+    tagline={tagline}
+    intro={`Software developer with 1+ years of experience designing and shipping scalable web applications and APIs across Python and Node.js — including <em>RAG pipelines, LLM integrations</em>, and real-time communication systems. Founded the first Google Developer Student Club chapter at Arthur Jarvis University.`}
+    socials={socials}
+  />
+
+  <section>
+    <h2>work</h2>
+    <RowList rows={workRows} />
+  </section>
+
+  <section>
+    <h2>timeline</h2>
+    <div class="timeline">
+      {FALLBACK_TIMELINE.map((t) => (
+        <div class="t-row">
+          <div class="t-year">{t.year}</div>
+          <div class="t-event">{t.event}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>education</h2>
+    <div class="timeline">
+      <div class="t-row">
+        <div class="t-year">2021 — 2024</div>
+        <div class="t-event"><strong>Arthur Jarvis University</strong> · B.Sc. Computer Science</div>
+      </div>
+      <div class="t-row">
+        <div class="t-year">2023 — 2024</div>
+        <div class="t-event"><strong>AltSchool Africa</strong> · Diploma in Backend Engineering</div>
+      </div>
+      <div class="t-row">
+        <div class="t-year">Mar — May 2024</div>
+        <div class="t-event"><strong>ALX</strong> · AI Career Essentials Certificate</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>certifications</h2>
+    <ul class="certs">
+      {CERTIFICATIONS.map((c) => (
+        <li><span class="c-year">{c.year}</span> {c.title}</li>
+      ))}
+    </ul>
+  </section>
+
+  <section>
+    <h2>stack</h2>
+    <ul class="stack">
+      {STACK.map((s) => <li>{s}</li>)}
+    </ul>
+  </section>
+
+  <Footer />
+</Base>
+
+<style>
+  .timeline { display: flex; flex-direction: column; }
+  .t-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 18px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--faint);
+    align-items: baseline;
+  }
+  .t-year {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+  }
+  .t-event { font-size: 15.5px; line-height: 1.55; }
+  .t-event strong { font-weight: 500; }
+
+  .certs {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .certs li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--faint);
+    font-size: 15px;
+    display: flex;
+    gap: 18px;
+    align-items: baseline;
+  }
+  .c-year {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    min-width: 60px;
+  }
+
+  .stack {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .stack li {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    border: 1px solid var(--faint);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  @media (max-width: 520px) {
+    .t-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
