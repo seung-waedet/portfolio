@@ -1,8 +1,11 @@
 FROM node:22-alpine AS builder
 
+# Enable pnpm via corepack (pinned in package.json's packageManager field)
+RUN corepack enable
+
 WORKDIR /app
 
-# Build-time env vars (passed by Dokploy)
+# Build-time env vars (passed by Dokploy as build args)
 ARG PUBLIC_SANITY_PROJECT_ID
 ARG PUBLIC_SANITY_DATASET=production
 ARG PUBLIC_HASHNODE_HOST
@@ -19,15 +22,11 @@ ENV PUBLIC_SANITY_PROJECT_ID=$PUBLIC_SANITY_PROJECT_ID \
     STRAVA_REFRESH_TOKEN=$STRAVA_REFRESH_TOKEN \
     STRAVA_ATHLETE_ID=$STRAVA_ATHLETE_ID
 
-COPY package.json ./
-# Intentionally NOT copying package-lock.json. Lockfiles generated on
-# macOS routinely miss the Linux-musl optional binaries that sharp and
-# rollup require on Alpine. Letting npm resolve fresh on the build
-# platform sidesteps npm/cli#4828 entirely.
-RUN npm install --no-audit --no-fund
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 
 FROM nginx:alpine AS runner
