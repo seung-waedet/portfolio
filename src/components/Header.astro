@@ -35,7 +35,7 @@ const isActive = (href: string) =>
     <ThemeToggle />
   </div>
 
-  <div class="avatar">{initial}</div>
+  <img class="avatar" src="/me.jpeg" alt={`Photo of ${name}`} width="56" height="56" loading="eager" decoding="async" />
   <h1>{name}</h1>
   <p class="tagline">{tagline}</p>
   <p class="intro" set:html={intro} />
@@ -79,15 +79,11 @@ const isActive = (href: string) =>
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
     margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--bg);
-    font-family: var(--font-serif);
-    font-size: 22px;
-    font-style: italic;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+    border: 1px solid var(--faint);
   }
   .tagline {
     color: var(--muted);
