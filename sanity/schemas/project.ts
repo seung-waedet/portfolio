@@ -13,6 +13,20 @@ export const project = defineType({
       validation: (r) => r.required(),
     }),
     defineField({ name: "icon", type: "string", description: "Single glyph for the row (e.g. ✦ ▶ ≈)" }),
+    defineField({
+      name: "category",
+      type: "string",
+      description: "Groups the project on /projects",
+      options: {
+        list: [
+          { title: "Backend", value: "backend" },
+          { title: "Frontend", value: "frontend" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "backend",
+      validation: (r) => r.required(),
+    }),
     defineField({ name: "tagline", type: "string", description: "One-line description" }),
     defineField({ name: "year", type: "string", description: "e.g. 2025 or 2024 — 2025" }),
     defineField({ name: "tech", type: "array", of: [{ type: "string" }] }),

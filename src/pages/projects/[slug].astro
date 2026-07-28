@@ -12,6 +12,9 @@ export async function getStaticPaths() {
         { slug: "document-rag-service" },
         { slug: "wallet-service" },
         { slug: "event-chat-backend" },
+        { slug: "aether" },
+        { slug: "volt-dev" },
+        { slug: "fluid" },
       ];
   return slugs.map((s) => ({ params: { slug: s.slug } }));
 }
@@ -63,6 +66,45 @@ const FALLBACKS: Record<string, {
       "Focused on low-latency WebSocket communication to support live Q&A and interactive participation at scale.",
     ],
     githubUrl: "https://github.com/seung-waedet/event-chat-backend",
+  },
+  aether: {
+    title: "AETHER",
+    tagline: "A luxury SaaS platform interface — editorial serif typography on obsidian.",
+    year: "2026",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    bullets: [
+      "Designed and built a high-end SaaS marketing and product surface around an obsidian palette, emerald accent, and a Cormorant Garamond / Public Sans type pairing.",
+      "Built four routes — intelligence, architecture, infrastructure, and security — each with scroll-triggered reveals and a glassmorphic sticky navigation shell.",
+      "Tuned for production: sub-20ms route transitions, audited mobile breakpoints, and motion that degrades gracefully without layout shift.",
+    ],
+    githubUrl: "https://github.com/seung-waedet/saas-landing-page",
+    liveUrl: "https://saas-landing-page-taupe-sigma.vercel.app/",
+  },
+  "volt-dev": {
+    title: "VOLT.dev",
+    tagline: "A brutalist, industrial dashboard for high-consequence system monitoring.",
+    year: "2026",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    bullets: [
+      "Built an industrial monitoring interface on raw CSS grids — stark black-and-white with construction-orange accents, set entirely in JetBrains and IBM Plex Mono.",
+      "Shipped a three-part system suite: Core metrics, Pulse heartbeat monitoring, and a Security threat log, driven by simulated real-time data streams.",
+      "Committed fully to the aesthetic — font smoothing disabled and a visible grid lattice — so the design reads as deliberate rather than templated.",
+    ],
+    githubUrl: "https://github.com/seung-waedet/volt-dev",
+    liveUrl: "https://volt-dev.vercel.app/",
+  },
+  fluid: {
+    title: "FLUID",
+    tagline: "An experimental studio portfolio built on organic, physics-based motion.",
+    year: "2026",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    bullets: [
+      "Built a creative-studio site around organic motion — morphing blob shapes, soft cream and sage palette, and Clash Display over Bricolage Grotesque.",
+      "Designed a floating navigation system with a glassmorphic mobile menu, plus work, studio, labs, and contact routes.",
+      "Used Framer Motion for spring-based, physics-driven transitions so movement feels continuous rather than stepped between states.",
+    ],
+    githubUrl: "https://github.com/seung-waedet/fluid-agency",
+    liveUrl: "https://fluid-agency.vercel.app/",
   },
 };
 

@@ -15,6 +15,7 @@ export type Project = {
   title: string;
   slug: { current: string };
   icon?: string;
+  category?: "frontend" | "backend";
   tagline?: string;
   year?: string;
   tech?: string[];
