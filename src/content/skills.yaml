@@ -1,0 +1,23 @@
+- id: languages
+  group: Languages & frameworks
+  items: [Python, Node.js, TypeScript, JavaScript, FastAPI, Flask, NestJS, Express.js, React, Next.js]
+
+- id: data
+  group: Databases & messaging
+  items: [PostgreSQL, MySQL, MongoDB, Redis, ChromaDB, Celery, BullMQ]
+
+- id: ai
+  group: AI / ML
+  items: [OpenAI, Google Gemini, LangChain, RAG, OpenAI Whisper, M2M100, Vector Embeddings]
+
+- id: infra
+  group: Infrastructure
+  items: [Docker, AWS, Linux, CI/CD, Git, RunPod]
+
+- id: apis
+  group: APIs & security
+  items: [WebSockets, JWT, OAuth 2.0, Rate Limiting]
+
+- id: testing
+  group: Testing
+  items: [Jest, pytest, Swagger/OpenAPI, Postman]

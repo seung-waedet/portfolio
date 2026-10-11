@@ -1,158 +1,47 @@
 ---
+import { render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Footer from "../../components/Footer.astro";
 import ThemeToggle from "../../components/ThemeToggle.astro";
-import { getAllProjects, getProjectBySlug } from "../../lib/queries";
+import { SITE } from "../../site.config";
+import { getProjects } from "../../lib/content";
 
 export async function getStaticPaths() {
-  const projects = await getAllProjects();
-  const slugs = projects.length
-    ? projects.map((p) => ({ slug: p.slug.current }))
-    : [
-        { slug: "document-rag-service" },
-        { slug: "wallet-service" },
-        { slug: "event-chat-backend" },
-        { slug: "aether" },
-        { slug: "volt-dev" },
-        { slug: "fluid" },
-      ];
-  return slugs.map((s) => ({ params: { slug: s.slug } }));
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
 }
 
-const { slug } = Astro.params;
-const project = await getProjectBySlug(slug!);
-
-// Verified personal projects from CV — used until Sanity is populated.
-const FALLBACKS: Record<string, {
-  title: string;
-  tagline: string;
-  year: string;
-  tech: string[];
-  bullets: string[];
-  githubUrl?: string;
-  liveUrl?: string;
-}> = {
-  "document-rag-service": {
-    title: "Document RAG Service",
-    tagline: "A Retrieval-Augmented Generation API for querying your own documents.",
-    year: "2025",
-    tech: ["NestJS", "TypeScript", "ChromaDB", "LangChain", "OpenAI / OpenRouter", "Docker"],
-    bullets: [
-      "Built a RAG API that processes uploaded PDF, DOCX, and TXT files, chunks and embeds them into ChromaDB, and answers natural-language questions using an LLM.",
-      "Leveraged LangChain's RecursiveCharacterTextSplitter for intelligent document chunking and OpenRouter for flexible LLM provider access (Meta Llama 3).",
-      "Fully documented via Swagger; containerised with Docker Compose for local vector database management.",
-    ],
-    githubUrl: "https://github.com/seung-waedet/document-rag-service",
-  },
-  "wallet-service": {
-    title: "Wallet Service",
-    tagline: "A secure, scalable digital wallet API with Paystack integration.",
-    year: "2025",
-    tech: ["NestJS", "TypeScript", "PostgreSQL", "Paystack", "Google OAuth", "JWT"],
-    bullets: [
-      "Developed a digital wallet API supporting user registration, JWT + Google OAuth authentication, and full transaction management (deposits, withdrawals, transfers).",
-      "Integrated Paystack for payments processing and TypeORM for PostgreSQL schema management and migrations.",
-      "Implemented security best practices including bcrypt password hashing, SQL injection prevention, and HTTPS enforcement.",
-    ],
-    githubUrl: "https://github.com/seung-waedet/wallet-service",
-  },
-  "event-chat-backend": {
-    title: "Event Chat Backend",
-    tagline: "A real-time WebSocket dialogue system for audience engagement at physical events.",
-    year: "2024",
-    tech: ["Node.js", "WebSockets", "Real-time Systems"],
-    bullets: [
-      "Designed and implemented a real-time, web-based dialogue system for audience engagement at physical events.",
-      "Focused on low-latency WebSocket communication to support live Q&A and interactive participation at scale.",
-    ],
-    githubUrl: "https://github.com/seung-waedet/event-chat-backend",
-  },
-  aether: {
-    title: "AETHER",
-    tagline: "A luxury SaaS platform interface — editorial serif typography on obsidian.",
-    year: "2026",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    bullets: [
-      "Designed and built a high-end SaaS marketing and product surface around an obsidian palette, emerald accent, and a Cormorant Garamond / Public Sans type pairing.",
-      "Built four routes — intelligence, architecture, infrastructure, and security — each with scroll-triggered reveals and a glassmorphic sticky navigation shell.",
-      "Tuned for production: sub-20ms route transitions, audited mobile breakpoints, and motion that degrades gracefully without layout shift.",
-    ],
-    githubUrl: "https://github.com/seung-waedet/saas-landing-page",
-    liveUrl: "https://saas-landing-page-taupe-sigma.vercel.app/",
-  },
-  "volt-dev": {
-    title: "VOLT.dev",
-    tagline: "A brutalist, industrial dashboard for high-consequence system monitoring.",
-    year: "2026",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    bullets: [
-      "Built an industrial monitoring interface on raw CSS grids — stark black-and-white with construction-orange accents, set entirely in JetBrains and IBM Plex Mono.",
-      "Shipped a three-part system suite: Core metrics, Pulse heartbeat monitoring, and a Security threat log, driven by simulated real-time data streams.",
-      "Committed fully to the aesthetic — font smoothing disabled and a visible grid lattice — so the design reads as deliberate rather than templated.",
-    ],
-    githubUrl: "https://github.com/seung-waedet/volt-dev",
-    liveUrl: "https://volt-dev.vercel.app/",
-  },
-  fluid: {
-    title: "FLUID",
-    tagline: "An experimental studio portfolio built on organic, physics-based motion.",
-    year: "2026",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    bullets: [
-      "Built a creative-studio site around organic motion — morphing blob shapes, soft cream and sage palette, and Clash Display over Bricolage Grotesque.",
-      "Designed a floating navigation system with a glassmorphic mobile menu, plus work, studio, labs, and contact routes.",
-      "Used Framer Motion for spring-based, physics-driven transitions so movement feels continuous rather than stepped between states.",
-    ],
-    githubUrl: "https://github.com/seung-waedet/fluid-agency",
-    liveUrl: "https://fluid-agency.vercel.app/",
-  },
-};
-
-const display = project ?? (FALLBACKS[slug!] ? {
-  title: FALLBACKS[slug!].title,
-  tagline: FALLBACKS[slug!].tagline,
-  year: FALLBACKS[slug!].year,
-  tech: FALLBACKS[slug!].tech,
-  bullets: FALLBACKS[slug!].bullets,
-  githubUrl: FALLBACKS[slug!].githubUrl,
-  liveUrl: FALLBACKS[slug!].liveUrl,
-} : null);
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
 ---
 
-<Base title={display ? `${display.title} — Seung-wa Akpan` : "Not found"}>
+<Base title={`${data.title} — ${SITE.name}`} description={data.tagline}>
   <div class="topbar">
     <a class="back" href="/projects">← all projects</a>
     <ThemeToggle />
   </div>
 
-  {
-    display ? (
-      <article>
-        <p class="year">{display.year}</p>
-        <h1>{display.title}</h1>
-        <p class="tagline">{display.tagline}</p>
+  <article>
+    <p class="year">{data.year}</p>
+    <h1>{data.title}</h1>
+    <p class="tagline">{data.tagline}</p>
 
-        {display.tech && display.tech.length > 0 && (
-          <ul class="stack">
-            {display.tech.map((t) => <li>{t}</li>)}
-          </ul>
-        )}
+    {data.tech.length > 0 && (
+      <ul class="stack" aria-label="Tech stack">
+        {data.tech.map((t) => <li>{t}</li>)}
+      </ul>
+    )}
 
-        <div class="links">
-          {display.liveUrl   && <a href={display.liveUrl}   class="link">live ↗</a>}
-          {display.githubUrl && <a href={display.githubUrl} class="link">github ↗</a>}
-        </div>
+    <div class="links">
+      {data.liveUrl && <a href={data.liveUrl} class="link" rel="noopener">live ↗</a>}
+      {data.githubUrl && <a href={data.githubUrl} class="link" rel="noopener">github ↗</a>}
+    </div>
 
-        {"bullets" in display && display.bullets && display.bullets.length > 0 && (
-          <ul class="bullets">
-            {display.bullets.map((b) => <li>{b}</li>)}
-          </ul>
-        )}
-      </article>
-    ) : (
-      <p>Project not found.</p>
-    )
-  }
+    <div class="body">
+      <Content />
+    </div>
+  </article>
 
   <Footer />
 </Base>
@@ -220,18 +109,25 @@ const display = project ?? (FALLBACKS[slug!] ? {
   }
   .link:hover { border-color: var(--accent); }
 
-  .bullets {
+
+  /* Project bodies are markdown bullet lists. */
+  .body :global(ul) {
     list-style: none;
     margin-top: 8px;
   }
-  .bullets li {
+  .body :global(li) {
     padding: 12px 0 12px 20px;
     border-bottom: 1px solid var(--faint);
     font-size: 15.5px;
     line-height: 1.55;
     position: relative;
   }
-  .bullets li::before {
+  .body :global(p) {
+    font-size: 15.5px;
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+  .body :global(li)::before {
     content: "·";
     color: var(--accent);
     position: absolute;

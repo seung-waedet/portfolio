@@ -1,0 +1,34 @@
+- id: ksolutions-kwf
+  when: 2025 — now
+  year: 2025
+  event: Backend Developer Intern at KSolutions (NYSC); Python Developer at Kevin Winter Foundation.
+
+- id: hng
+  when: Oct — Dec 2025
+  year: 2025
+  event: Backend Engineering Intern at HNG Tech — AI Bible chat platform on NestJS + Gemini.
+
+- id: altschool-alx-tiidelab
+  when: "2024"
+  year: 2024
+  event: Diploma in Backend Engineering at AltSchool Africa; ALX AI Career Essentials; Python Developer at TIIDELAB Pre-fellowship.
+
+- id: resourceful-dev
+  when: "2023"
+  year: 2023
+  event: Backend Developer Intern at Resourceful Dev (Abuja).
+
+- id: gdsc
+  when: Aug 2022 — 2023
+  year: 2022
+  event: Founded and led the first Google Developer Student Club chapter at Arthur Jarvis University.
+
+- id: digital-box
+  when: "2022"
+  year: 2022
+  event: Web Developer Intern at Digital Box (Abuja).
+
+- id: bsc-start
+  when: Feb 2021
+  year: 2021
+  event: Started B.Sc Computer Science at Arthur Jarvis University.

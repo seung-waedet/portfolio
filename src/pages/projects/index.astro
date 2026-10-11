@@ -3,54 +3,26 @@ import Base from "../../layouts/Base.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import RowList from "../../components/RowList.astro";
-import { getAbout, getAllProjects } from "../../lib/queries";
+import { SITE } from "../../site.config";
+import { getProjects, projectRow } from "../../lib/content";
 
-const [about, projects] = await Promise.all([getAbout(), getAllProjects()]);
-
-// Real personal projects from CV
-const FALLBACK_PROJECTS = [
-  { icon: "✦", title: "Document RAG Service", sub: "RAG API — chunk, embed, query PDFs/DOCX/TXT with an LLM", end: "2025", href: "/projects/document-rag-service", category: "backend" },
-  { icon: "◇", title: "Wallet Service",       sub: "Digital wallet API with Paystack + OAuth + JWT",          end: "2025", href: "/projects/wallet-service",       category: "backend" },
-  { icon: "▷", title: "Event Chat Backend",   sub: "Real-time WebSocket dialogue for live event Q&A",         end: "2024", href: "/projects/event-chat-backend",    category: "backend" },
-  { icon: "◈", title: "AETHER",               sub: "Luxury SaaS platform UI — editorial serif on obsidian",   end: "2026", href: "/projects/aether",                category: "frontend" },
-  { icon: "▚", title: "VOLT.dev",             sub: "Brutalist industrial monitoring dashboard",               end: "2026", href: "/projects/volt-dev",              category: "frontend" },
-  { icon: "≈", title: "FLUID",                sub: "Organic, physics-based motion for a creative studio",     end: "2026", href: "/projects/fluid",                 category: "frontend" },
-];
-
-const all = projects.length
-  ? projects.map((p) => ({
-      icon: p.icon ?? "·",
-      title: p.title,
-      sub: p.tagline ?? "",
-      end: p.year ?? "",
-      href: `/projects/${p.slug.current}`,
-      category: p.category ?? "backend",
-    }))
-  : FALLBACK_PROJECTS;
+const projects = await getProjects();
 
 const groups = [
-  { label: "frontend", note: "Interface work — design systems, motion, and production-grade UI.", rows: all.filter((p) => p.category === "frontend") },
-  { label: "backend",  note: "Services and APIs — data pipelines, payments, and real-time systems.", rows: all.filter((p) => p.category !== "frontend") },
-].filter((g) => g.rows.length > 0);
-
-const name    = about?.name    ?? "Seung-wa Akpan";
-const initial = about?.initial ?? "s";
-const tagline = about?.tagline ?? "software developer · python & node.js · ai/llm integrations";
+  { category: "frontend", note: "Interface work — design systems, motion, and production-grade UI." },
+  { category: "backend", note: "Services and APIs — data pipelines, payments, and real-time systems." },
+]
+  .map((g) => ({ ...g, rows: projects.filter((p) => p.data.category === g.category).map(projectRow) }))
+  .filter((g) => g.rows.length > 0);
 ---
 
-<Base title={`Projects — ${name}`}>
-  <Header
-    name={name}
-    initial={initial}
-    tagline={tagline}
-    intro="Interfaces and services I've built. Code lives on GitHub; write-ups are added as I get to them."
-    socials={about?.socials ?? []}
-  />
+<Base title={`Projects — ${SITE.name}`}>
+  <Header intro={SITE.intro.projects} />
 
   {
     groups.map((g) => (
       <section>
-        <h2>{g.label}</h2>
+        <h2>{g.category}</h2>
         <p class="group-note">{g.note}</p>
         <RowList rows={g.rows} />
       </section>

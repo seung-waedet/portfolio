@@ -1,0 +1,17 @@
+- id: arthur-jarvis
+  school: Arthur Jarvis University
+  credential: B.Sc. Computer Science
+  start: "2021"
+  end: "2024"
+
+- id: altschool
+  school: AltSchool Africa
+  credential: Diploma in Backend Engineering
+  start: "2023"
+  end: "2024"
+
+- id: alx
+  school: ALX
+  credential: AI Career Essentials Certificate
+  start: "2024-03"
+  end: "2024-05"

@@ -1,0 +1,40 @@
+# Newest first is not required; pages sort by start date.
+- id: ksolutions
+  company: KSolutions
+  role: Backend Developer Intern (NYSC)
+  stack: [Node.js, NestJS, Express, Docker]
+  start: "2025-02"
+
+- id: kevin-winter-foundation
+  company: Kevin Winter Foundation
+  role: Python Developer
+  stack: [Flask, Celery, Redis, RunPod GPU, Whisper, M2M100]
+  start: "2025-01"
+
+- id: hng-tech
+  company: HNG Tech
+  role: Backend Engineering Intern
+  stack: [NestJS, Gemini, MongoDB, Socket.IO]
+  start: "2025-10"
+  end: "2025-12"
+
+- id: tiidelab
+  company: TIIDELAB
+  role: Python Developer Pre-fellow
+  stack: [Python, AI text-to-image service]
+  start: "2024-06"
+  end: "2024-08"
+
+- id: resourceful-dev
+  company: Resourceful Dev
+  role: Backend Developer Intern
+  stack: [Node.js, Express, Redis, JWT]
+  start: "2023-07"
+  end: "2023-09"
+
+- id: digital-box
+  company: Digital Box
+  role: Web Developer Intern
+  stack: [HTML/CSS/JS, WordPress]
+  start: "2022-07"
+  end: "2022-09"

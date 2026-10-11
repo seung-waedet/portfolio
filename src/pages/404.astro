@@ -1,0 +1,11 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE } from "../site.config";
+---
+
+<Base title={`Not found — ${SITE.name}`} description="This page doesn't exist.">
+  <Header intro={`Nothing lives at this address. Try the <em>projects</em> or head back home.`} />
+  <Footer />
+</Base>
