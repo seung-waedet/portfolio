@@ -1,9 +1,12 @@
 ---
+import Moon from "@lucide/astro/icons/moon";
+import Sun from "@lucide/astro/icons/sun";
+import { ICON_PROPS } from "../lib/icons";
 ---
 
 <button class="theme-toggle" aria-label="Toggle color theme" data-theme-toggle>
-  <span class="dark-label">☾ dark</span>
-  <span class="light-label">☼ light</span>
+  <span class="dark-label icon-link"><Moon {...ICON_PROPS.inline} /> dark</span>
+  <span class="light-label icon-link"><Sun {...ICON_PROPS.inline} /> light</span>
 </button>
 
 <style>
@@ -22,10 +25,10 @@
     color: var(--accent);
     border-color: var(--accent);
   }
-  .dark-label { display: inline; }
+  .dark-label { display: inline-flex; }
   .light-label { display: none; }
   :global(html.light) .dark-label { display: none; }
-  :global(html.light) .light-label { display: inline; }
+  :global(html.light) .light-label { display: inline-flex; }
 </style>
 
 <script>

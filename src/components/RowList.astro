@@ -1,4 +1,5 @@
 ---
+import Icon from "./Icon.astro";
 import type { Row } from "../lib/content";
 
 interface Props {
@@ -15,7 +16,7 @@ const { rows, noIcon = false } = Astro.props;
       const Element = r.href ? "a" : "div";
       return (
         <Element href={r.href} class:list={["row", { "no-icon": noIcon }]}>
-          {!noIcon && <span class="row-icon" aria-hidden="true">{r.icon ?? "·"}</span>}
+          {!noIcon && <span class="row-icon">{r.icon && <Icon name={r.icon} />}</span>}
           <span class="row-title">
             {r.title}
             {r.sub && <span class="row-sub">{r.sub}</span>}

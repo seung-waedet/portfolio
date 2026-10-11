@@ -4,7 +4,7 @@ summary: Brutalist industrial monitoring dashboard
 tagline: A brutalist, industrial dashboard for high-consequence system monitoring.
 year: 2026
 category: frontend
-icon: "▚"
+icon: zap
 tech: [Next.js, React, TypeScript, Tailwind CSS, Framer Motion]
 githubUrl: https://github.com/seung-waedet/volt-dev
 liveUrl: https://volt-dev.vercel.app/

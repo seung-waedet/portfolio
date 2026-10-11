@@ -4,7 +4,7 @@ summary: RAG API — chunk, embed, query PDFs/DOCX/TXT with an LLM
 tagline: A Retrieval-Augmented Generation API for querying your own documents.
 year: 2025
 category: backend
-icon: "✦"
+icon: file-search
 tech: [NestJS, TypeScript, ChromaDB, LangChain, OpenAI / OpenRouter, Docker]
 githubUrl: https://github.com/seung-waedet/document-rag-service
 featured: true

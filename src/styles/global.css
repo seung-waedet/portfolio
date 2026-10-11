@@ -19,6 +19,9 @@
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --font-serif: "IBM Plex Serif", Georgia, serif;
 
+  --row-title-size: 16px;
+  --row-title-leading: 1.35;
+
   --max-w: 640px;
   --pad-x: 28px;
 }
@@ -92,7 +95,14 @@ section { margin-top: 72px; }
 .mono { font-family: var(--font-mono); }
 .muted { color: var(--muted); }
 
-/* Reusable row list (books, projects, work, notes) */
+/* Text + Lucide icon, vertically centred (links, toggle labels). */
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+/* Reusable row list (projects, work) */
 .row-list { display: flex; flex-direction: column; }
 
 .row {
@@ -108,13 +118,15 @@ section { margin-top: 72px; }
 .row:hover .row-icon { color: var(--accent); }
 
 .row-icon {
+  /* Centre the icon on the title's first line, whatever the sub-line does below it. */
+  align-self: start;
+  display: flex;
+  align-items: center;
+  height: calc(var(--row-title-size) * var(--row-title-leading));
   color: var(--muted);
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 18px;
-  line-height: 1;
+  transition: color 0.18s ease;
 }
-.row-title { font-size: 16px; line-height: 1.35; }
+.row-title { font-size: var(--row-title-size); line-height: var(--row-title-leading); }
 .row-title .row-sub {
   display: block;
   font-family: var(--font-mono);

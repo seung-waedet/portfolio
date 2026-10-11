@@ -3,7 +3,10 @@ import { render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Footer from "../../components/Footer.astro";
 import ThemeToggle from "../../components/ThemeToggle.astro";
+import ArrowLeft from "@lucide/astro/icons/arrow-left";
+import ArrowUpRight from "@lucide/astro/icons/arrow-up-right";
 import { SITE } from "../../site.config";
+import { ICON_PROPS } from "../../lib/icons";
 import { getProjects } from "../../lib/content";
 
 export async function getStaticPaths() {
@@ -18,7 +21,7 @@ const { Content } = await render(project);
 
 <Base title={`${data.title} — ${SITE.name}`} description={data.tagline}>
   <div class="topbar">
-    <a class="back" href="/projects">← all projects</a>
+    <a class="back icon-link" href="/projects"><ArrowLeft {...ICON_PROPS.inline} /> all projects</a>
     <ThemeToggle />
   </div>
 
@@ -34,8 +37,8 @@ const { Content } = await render(project);
     )}
 
     <div class="links">
-      {data.liveUrl && <a href={data.liveUrl} class="link" rel="noopener">live ↗</a>}
-      {data.githubUrl && <a href={data.githubUrl} class="link" rel="noopener">github ↗</a>}
+      {data.liveUrl && <a href={data.liveUrl} class="link icon-link" rel="noopener">live <ArrowUpRight {...ICON_PROPS.inline} /></a>}
+      {data.githubUrl && <a href={data.githubUrl} class="link icon-link" rel="noopener">github <ArrowUpRight {...ICON_PROPS.inline} /></a>}
     </div>
 
     <div class="body">

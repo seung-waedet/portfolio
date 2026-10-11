@@ -1,0 +1,35 @@
+---
+/**
+ * Content-driven icon: renders a registered Lucide icon by name. UI chrome (arrows,
+ * theme toggle) imports Lucide components directly; both share ICON_PROPS so the
+ * whole site uses one size scale and one stroke weight.
+ */
+import Briefcase from "@lucide/astro/icons/briefcase";
+import FileSearch from "@lucide/astro/icons/file-search";
+import Gem from "@lucide/astro/icons/gem";
+import MessagesSquare from "@lucide/astro/icons/messages-square";
+import Wallet from "@lucide/astro/icons/wallet";
+import WavesHorizontal from "@lucide/astro/icons/waves-horizontal";
+import Zap from "@lucide/astro/icons/zap";
+import { ICON_PROPS, type IconName } from "../lib/icons";
+
+interface Props {
+  name: IconName;
+  class?: string;
+}
+
+const REGISTRY = {
+  briefcase: Briefcase,
+  "file-search": FileSearch,
+  gem: Gem,
+  "messages-square": MessagesSquare,
+  wallet: Wallet,
+  waves: WavesHorizontal,
+  zap: Zap,
+} satisfies Record<IconName, unknown>;
+
+const { name, class: className } = Astro.props;
+const Component = REGISTRY[name];
+---
+
+<Component {...ICON_PROPS.row} class={className} />

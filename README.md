@@ -33,6 +33,8 @@ Schemas live in `src/content.config.ts`.
 
 **Add a project:** copy any file in `src/content/projects/`, rename it (the filename is the URL slug), edit the frontmatter. `featured: true` puts it on the home page; `order` sorts it.
 
+**Icons** come from [Lucide](https://lucide.dev/icons) via `@lucide/astro`. A project's `icon:` must be a name listed in `src/lib/icons.ts`; to use a new one, add its name there and its import to `src/components/Icon.astro` (TypeScript fails the build if the two drift). Sizes and stroke weight are set once in `ICON_PROPS`.
+
 **Dates** are `YYYY` or `YYYY-MM`. Leave `end` off for a current role; ranges render as `Feb 2025 — now`, `Oct — Dec 2025`, `2021 — 2024`.
 
 ## Deploy

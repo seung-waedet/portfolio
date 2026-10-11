@@ -1,10 +1,13 @@
 ---
+import ArrowUp from "@lucide/astro/icons/arrow-up";
+import { ICON_PROPS } from "../lib/icons";
+
 const year = new Date().getFullYear();
 ---
 
 <footer>
   <div>© {year} · set in IBM Plex</div>
-  <div><a href="#top">↑ top</a></div>
+  <div><a href="#top" class="icon-link"><ArrowUp {...ICON_PROPS.inline} /> top</a></div>
 </footer>
 
 <style>

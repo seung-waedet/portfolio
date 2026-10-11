@@ -4,7 +4,7 @@ summary: Luxury SaaS platform UI — editorial serif on obsidian
 tagline: A luxury SaaS platform interface — editorial serif typography on obsidian.
 year: 2026
 category: frontend
-icon: "◈"
+icon: gem
 tech: [Next.js, React, TypeScript, Tailwind CSS, Framer Motion]
 githubUrl: https://github.com/seung-waedet/saas-landing-page
 liveUrl: https://saas-landing-page-taupe-sigma.vercel.app/

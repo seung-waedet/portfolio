@@ -1,8 +1,9 @@
 import { getCollection } from "astro:content";
 import { formatRange } from "./dates";
+import type { IconName } from "./icons";
 
 /** Row shape consumed by <RowList>. */
-export type Row = { icon?: string; title: string; sub?: string; end?: string; href?: string };
+export type Row = { icon?: IconName; title: string; sub?: string; end?: string; href?: string };
 
 export async function getProjects({ featuredOnly = false } = {}) {
   const all = await getCollection("projects", ({ data }) => !featuredOnly || data.featured);
@@ -31,7 +32,7 @@ export async function getWorkRows({ limit, stackLimit }: { limit?: number; stack
       b.data.start.localeCompare(a.data.start),
   );
   return work.slice(0, limit).map(({ data }): Row => ({
-    icon: "§",
+    icon: "briefcase",
     title: data.company,
     sub: [data.role, ...data.stack.slice(0, stackLimit)].join(" · "),
     end: formatRange(data.start, data.end),

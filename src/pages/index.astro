@@ -3,7 +3,9 @@ import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import RowList from "../components/RowList.astro";
+import ArrowRight from "@lucide/astro/icons/arrow-right";
 import { SITE } from "../site.config";
+import { ICON_PROPS } from "../lib/icons";
 import { getProjects, getWorkRows, projectRow } from "../lib/content";
 
 const buildingRows = (await getProjects({ featuredOnly: true })).map(projectRow);
@@ -17,13 +19,13 @@ const workRows = await getWorkRows({ limit: 3, stackLimit: 2 });
   <section>
     <h2>building</h2>
     <RowList rows={buildingRows} />
-    <p class="more"><a href="/projects">all projects →</a></p>
+    <p class="more"><a href="/projects" class="icon-link">all projects <ArrowRight {...ICON_PROPS.inline} /></a></p>
   </section>
 
   <section>
     <h2>work</h2>
     <RowList rows={workRows} />
-    <p class="more"><a href="/about">full history →</a></p>
+    <p class="more"><a href="/about" class="icon-link">full history <ArrowRight {...ICON_PROPS.inline} /></a></p>
   </section>
 
   <Footer />
