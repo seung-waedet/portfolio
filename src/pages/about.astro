@@ -2,12 +2,10 @@
 import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import RowList from "../components/RowList.astro";
 import { SITE } from "../site.config";
-import { getCertifications, getEducation, getSkills, getTimeline, getWorkRows } from "../lib/content";
+import { getCertifications, getEducation, getSkills, getTimeline } from "../lib/content";
 
-const [workRows, timeline, education, certifications, skills] = await Promise.all([
-  getWorkRows(),
+const [timeline, education, certifications, skills] = await Promise.all([
   getTimeline(),
   getEducation(),
   getCertifications(),
@@ -17,11 +15,6 @@ const [workRows, timeline, education, certifications, skills] = await Promise.al
 
 <Base title={`About — ${SITE.name}`}>
   <Header intro={SITE.intro.about} />
-
-  <section>
-    <h2>work</h2>
-    <RowList rows={workRows} />
-  </section>
 
   <section>
     <h2>timeline</h2>

@@ -1,7 +1,12 @@
-- id: ksolutions-kwf
-  when: 2025 — now
+- id: kwf
+  when: Jan 2025 — now
   year: 2025
-  event: Backend Developer Intern at KSolutions (NYSC); Python Developer at Kevin Winter Foundation.
+  event: Python Developer at Kevin Winter Foundation.
+
+- id: ksolutions
+  when: Feb 2025 — Mar 2026
+  year: 2025
+  event: Backend Developer at KSolutions (NYSC service year).
 
 - id: hng
   when: Oct — Dec 2025

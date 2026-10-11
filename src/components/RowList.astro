@@ -1,13 +1,11 @@
 ---
-import Icon from "./Icon.astro";
 import type { Row } from "../lib/content";
 
 interface Props {
   rows: Row[];
-  noIcon?: boolean;
 }
 
-const { rows, noIcon = false } = Astro.props;
+const { rows } = Astro.props;
 ---
 
 <div class="row-list">
@@ -15,8 +13,7 @@ const { rows, noIcon = false } = Astro.props;
     rows.map((r) => {
       const Element = r.href ? "a" : "div";
       return (
-        <Element href={r.href} class:list={["row", { "no-icon": noIcon }]}>
-          {!noIcon && <span class="row-icon">{r.icon && <Icon name={r.icon} />}</span>}
+        <Element href={r.href} class="row">
           <span class="row-title">
             {r.title}
             {r.sub && <span class="row-sub">{r.sub}</span>}

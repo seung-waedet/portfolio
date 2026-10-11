@@ -4,7 +4,6 @@ summary: Real-time WebSocket dialogue for live event Q&A
 tagline: A real-time WebSocket dialogue system for audience engagement at physical events.
 year: 2024
 category: backend
-icon: messages-square
 tech: [Node.js, WebSockets, Real-time Systems]
 githubUrl: https://github.com/seung-waedet/event-chat-backend
 featured: true

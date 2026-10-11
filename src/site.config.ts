@@ -20,7 +20,7 @@ export const SITE = {
   ],
   /** Rendered with set:html so <em> can mark the accent phrases. */
   intro: {
-    home: `I design and ship scalable web applications and APIs across Python and Node.js — including RAG pipelines, <em>LLM integrations</em>, and real-time systems. Currently building backend services at <em>KSolutions</em> and AI platforms at <em>Kevin Winter Foundation</em>.`,
+    home: `I design and ship scalable web applications and APIs across Python and Node.js — including RAG pipelines, <em>LLM integrations</em>, and real-time systems. Currently building AI platforms at <em>Kevin Winter Foundation</em>.`,
     projects: `Interfaces and services I've built. Code lives on GitHub; write-ups are added as I get to them.`,
     about: `Software developer with 1+ years of experience designing and shipping scalable web applications and APIs across Python and Node.js — including <em>RAG pipelines, LLM integrations</em>, and real-time communication systems. Founded the first Google Developer Student Club chapter at Arthur Jarvis University.`,
   },

@@ -1,7 +1,6 @@
 import { defineCollection } from "astro:content";
 import { file, glob } from "astro/loaders";
 import { z } from "astro/zod";
-import { ICON_NAMES } from "./lib/icons";
 
 /** "2025" or "2025-02". Month precision is optional so year-only ranges stay honest. */
 const yearMonth = z.string().regex(/^\d{4}(-(0[1-9]|1[0-2]))?$/, "expected YYYY or YYYY-MM");
@@ -16,27 +15,12 @@ const projects = defineCollection({
     tagline: z.string(),
     year: z.number().int(),
     category: z.enum(["frontend", "backend"]),
-    /** A name from src/lib/icons.ts. */
-    icon: z.enum(ICON_NAMES).optional(),
     tech: z.array(z.string()).default([]),
     githubUrl: z.url().optional(),
     liveUrl: z.url().optional(),
     featured: z.boolean().default(false),
     /** Lower sorts first. */
     order: z.number().int(),
-  }),
-});
-
-const work = defineCollection({
-  loader: file("src/content/work.yaml"),
-  schema: z.object({
-    company: z.string(),
-    role: z.string(),
-    stack: z.array(z.string()),
-    start: yearMonth,
-    /** Omit for a current role. */
-    end: yearMonth.optional(),
-    url: z.url().optional(),
   }),
 });
 
@@ -77,4 +61,4 @@ const skills = defineCollection({
   }),
 });
 
-export const collections = { projects, work, education, certifications, timeline, skills };
+export const collections = { projects, education, certifications, timeline, skills };

@@ -4,7 +4,6 @@ summary: Organic, physics-based motion for a creative studio
 tagline: An experimental studio portfolio built on organic, physics-based motion.
 year: 2026
 category: frontend
-icon: waves
 tech: [Next.js, React, TypeScript, Tailwind CSS, Framer Motion]
 githubUrl: https://github.com/seung-waedet/fluid-agency
 liveUrl: https://fluid-agency.vercel.app/
