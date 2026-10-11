@@ -11,7 +11,8 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "resume": "bash scripts/resume.sh"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

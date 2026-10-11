@@ -9,6 +9,8 @@ export const SITE = {
   description:
     "Software developer building web applications, APIs, RAG pipelines and LLM integrations in Python and Node.js.",
   socials: [
+    // Work history lives here, not on the site. Regenerate with `pnpm resume`.
+    { label: "resume", href: "/resume.pdf" },
     { label: "github", href: "https://github.com/seung-waedet" },
     { label: "linkedin", href: "https://linkedin.com/in/seungwaakpan" },
     { label: "email", href: "mailto:seungwaakpan@gmail.com" },
