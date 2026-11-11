@@ -1,15 +1,12 @@
 ---
 title: Document RAG Service
-summary: RAG API — chunk, embed, query PDFs/DOCX/TXT with an LLM
-tagline: A Retrieval-Augmented Generation API for querying your own documents.
+summary: RAG API that answers questions about uploaded PDF, DOCX and TXT files
+tagline: A retrieval-augmented generation API for asking questions about your own documents.
 year: 2025
-category: backend
-tech: [NestJS, TypeScript, ChromaDB, LangChain, OpenAI / OpenRouter, Docker]
+tech: [NestJS, TypeScript, ChromaDB, LangChain, OpenRouter, Docker]
 githubUrl: https://github.com/seung-waedet/document-rag-service
-featured: true
-order: 1
+order: 3
 ---
 
-- Built a RAG API that processes uploaded PDF, DOCX, and TXT files, chunks and embeds them into ChromaDB, and answers natural-language questions using an LLM.
-- Leveraged LangChain's RecursiveCharacterTextSplitter for intelligent document chunking and OpenRouter for flexible LLM provider access (Meta Llama 3).
-- Fully documented via Swagger; containerised with Docker Compose for local vector database management.
+- Retrieval-augmented generation API that ingests PDF, DOCX, and TXT files, chunks and embeds them into ChromaDB, and answers natural-language questions with an LLM.
+- Chunks with LangChain's RecursiveCharacterTextSplitter and calls Llama 3 through OpenRouter, so the model provider can change; ChromaDB runs in Docker Compose.

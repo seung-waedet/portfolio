@@ -1,16 +1,19 @@
 /**
  * Site-wide identity. Page content lives in src/content/ (see content.config.ts);
  * this file holds only what is shared by every page.
+ *
+ * Every factual claim here must trace to a line on the CV (~/Desktop/cv/SeungwaAkpan_CV.html).
+ * `pnpm build` runs scripts/check-copy.mjs over the output to enforce the style and qualifier rules.
  */
 export const SITE = {
   name: "Seung-wa Akpan",
+  role: "Applied AI & Backend Engineer",
   url: "https://seungwaakpan.com",
-  tagline: "software developer · python & node.js · ai/llm integrations",
   description:
-    "Software developer building web applications, APIs, RAG pipelines and LLM integrations in Python and Node.js.",
+    "Seung-wa Akpan is an applied AI and backend engineer who builds AI products and the backend that runs them, in Python and TypeScript. Open to remote contract and full-time work.",
   socials: [
-    // Work history lives here, not on the site. Regenerate with `pnpm resume`.
-    { label: "resume", href: "/resume.pdf" },
+    // Rendered from the CV with the phone number stripped. Regenerate with `pnpm resume`.
+    { label: "cv", href: "/resume.pdf" },
     { label: "github", href: "https://github.com/seung-waedet" },
     { label: "linkedin", href: "https://linkedin.com/in/seungwaakpan" },
     { label: "email", href: "mailto:seungwaakpan@gmail.com" },
@@ -18,12 +21,14 @@ export const SITE = {
   nav: [
     { label: "home", href: "/" },
     { label: "projects", href: "/projects" },
-    { label: "about", href: "/about" },
   ],
   /** Rendered with set:html so <em> can mark the accent phrases. */
   intro: {
-    home: `I design and ship scalable web applications and APIs across Python and Node.js — including RAG pipelines, <em>LLM integrations</em>, and real-time systems. Currently building AI platforms at <em>Kevin Winter Foundation</em>.`,
-    projects: `Interfaces and services I've built. Code lives on GitHub; write-ups are added as I get to them.`,
-    about: `Software developer with 1+ years of experience designing and shipping scalable web applications and APIs across Python and Node.js — including <em>RAG pipelines, LLM integrations</em>, and real-time communication systems. Founded the first Google Developer Student Club chapter at Arthur Jarvis University.`,
+    home: `I build AI products and the backend that runs them. I've built and maintained the AI pipeline for a production <em>transcription and translation platform</em>, and worked on its GPU model serving, job pipelines, billing, and the evals that check the output. I work in Python and TypeScript, and I'm open to <em>remote contract and full-time work</em>.`,
+    projects: `Things I've built. Public code is linked where it exists.`,
   },
+  howIWork: `I build with coding agents and check their work with regression tests and measurements on real workloads.`,
 } as const;
+
+/** "Page · Seung-wa Akpan". Home uses the role instead of a page name. */
+export const pageTitle = (page: string = SITE.role) => `${page} · ${SITE.name}`;

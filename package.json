@@ -8,11 +8,13 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && node scripts/check-copy.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro",
-    "resume": "bash scripts/resume.sh"
+    "resume": "bash scripts/resume.sh",
+    "test": "node --test scripts/*.test.mjs",
+    "check:copy": "node scripts/check-copy.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

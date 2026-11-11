@@ -3,32 +3,31 @@ import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import RowList from "../components/RowList.astro";
-import ArrowRight from "@lucide/astro/icons/arrow-right";
 import { SITE } from "../site.config";
-import { ICON_PROPS } from "../lib/icons";
 import { getProjects, projectRow } from "../lib/content";
 
-const buildingRows = (await getProjects({ featuredOnly: true })).map(projectRow);
+const projectRows = (await getProjects()).map(projectRow);
 ---
 
-<Base title={`${SITE.name} — software developer`}>
+<Base>
   <Header intro={SITE.intro.home} />
 
   <section>
-    <h2>building</h2>
-    <RowList rows={buildingRows} />
-    <p class="more"><a href="/projects" class="icon-link">all projects <ArrowRight {...ICON_PROPS.inline} /></a></p>
+    <h2>how I work</h2>
+    <p class="how">{SITE.howIWork}</p>
+  </section>
+
+  <section>
+    <h2>projects</h2>
+    <RowList rows={projectRows} />
   </section>
 
   <Footer />
 </Base>
 
 <style>
-  .more {
-    margin-top: 16px;
-    font-family: var(--font-mono);
-    font-size: 13px;
+  .how {
+    font-size: 16.5px;
+    max-width: 560px;
   }
-  .more a { color: var(--muted); }
-  .more a:hover { color: var(--accent); }
 </style>

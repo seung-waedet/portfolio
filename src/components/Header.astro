@@ -30,7 +30,7 @@ const isActive = (href: string) =>
 
   <Image class="avatar" src={avatar} alt={`Photo of ${SITE.name}`} widths={[200, 400]} sizes="200px" loading="eager" fetchpriority="high" />
   <h1>{SITE.name}</h1>
-  <p class="tagline">{SITE.tagline}</p>
+  <p class="tagline">{SITE.role}</p>
   <p class="intro" set:html={intro} />
 
   <div class="socials">
@@ -83,11 +83,18 @@ const isActive = (href: string) =>
     font-size: 15px;
     margin-bottom: 28px;
     font-family: var(--font-mono);
+    text-transform: lowercase;
   }
   .intro {
     font-size: 16.5px;
     margin-bottom: 28px;
     max-width: 560px;
+  }
+  .intro :global(a) {
+    border-bottom: 1px solid var(--faint);
+  }
+  .intro :global(a:hover) {
+    border-color: var(--accent);
   }
   .intro :global(em) {
     color: var(--accent);
