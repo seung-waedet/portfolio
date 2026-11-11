@@ -2,14 +2,14 @@
 import "../styles/global.css";
 import { getImage } from "astro:assets";
 import avatar from "../assets/me.jpeg";
-import { SITE } from "../site.config";
+import { SITE, pageTitle } from "../site.config";
 
 interface Props {
   title?: string;
   description?: string;
 }
 
-const { title = SITE.name, description = SITE.description } = Astro.props;
+const { title = pageTitle(), description = SITE.description } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url);
 // No dedicated OG artwork yet; the portrait works as a square "summary" card.

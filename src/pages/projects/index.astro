@@ -3,42 +3,19 @@ import Base from "../../layouts/Base.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import RowList from "../../components/RowList.astro";
-import { SITE } from "../../site.config";
+import { SITE, pageTitle } from "../../site.config";
 import { getProjects, projectRow } from "../../lib/content";
 
-const projects = await getProjects();
-
-const groups = [
-  { category: "frontend", note: "Interface work — design systems, motion, and production-grade UI." },
-  { category: "backend", note: "Services and APIs — data pipelines, payments, and real-time systems." },
-]
-  .map((g) => ({ ...g, rows: projects.filter((p) => p.data.category === g.category).map(projectRow) }))
-  .filter((g) => g.rows.length > 0);
+const rows = (await getProjects()).map(projectRow);
 ---
 
-<Base title={`Projects — ${SITE.name}`}>
+<Base title={pageTitle("Projects")}>
   <Header intro={SITE.intro.projects} />
 
-  {
-    groups.map((g) => (
-      <section>
-        <h2>{g.category}</h2>
-        <p class="group-note">{g.note}</p>
-        <RowList rows={g.rows} />
-      </section>
-    ))
-  }
+  <section>
+    <h2>projects</h2>
+    <RowList rows={rows} />
+  </section>
 
   <Footer />
 </Base>
-
-<style>
-  /* h2 owns the 22px gap; the note tucks under it without doubling that space. */
-  h2 { margin-bottom: 8px; }
-  .group-note {
-    font-size: 14.5px;
-    color: var(--muted);
-    max-width: 460px;
-    margin-bottom: 22px;
-  }
-</style>
