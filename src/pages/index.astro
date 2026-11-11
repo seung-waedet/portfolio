@@ -13,21 +13,9 @@ const projectRows = (await getProjects()).map(projectRow);
   <Header intro={SITE.intro.home} />
 
   <section>
-    <h2>how I work</h2>
-    <p class="how">{SITE.howIWork}</p>
-  </section>
-
-  <section>
     <h2>projects</h2>
     <RowList rows={projectRows} />
   </section>
 
   <Footer />
 </Base>
-
-<style>
-  .how {
-    font-size: 16.5px;
-    max-width: 560px;
-  }
-</style>

@@ -27,7 +27,6 @@ export const SITE = {
     home: `I build AI products and the backend that runs them. I've built and maintained the AI pipeline for a production <em>transcription and translation platform</em>, and worked on its GPU model serving, job pipelines, billing, and the evals that check the output. I work in Python and TypeScript, and I'm open to <em>remote contract and full-time work</em>.`,
     projects: `Things I've built. Public code is linked where it exists.`,
   },
-  howIWork: `I build with coding agents and check their work with regression tests and measurements on real workloads.`,
 } as const;
 
 /** "Page · Seung-wa Akpan". Home uses the role instead of a page name. */
